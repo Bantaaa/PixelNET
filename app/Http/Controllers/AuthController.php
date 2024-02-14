@@ -2,45 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Reservation;
 use App\Models\User;
+use App\Models\Reservation;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
    
     public function auth(){
+        
        return view("auth");
     }
-
-    public function signup(Request $request){
-
-
-
-      // Validate the form data
-      $validatedData = $request->validate([
-        'name' => 'required|string|max:255',
+public function signup(Request $request)
+{
+    $validatedData = $request->validate([
+        'Fname' => 'required|string|max:255',
+        'Lname' => 'required|string|max:255',
+        'phone' => 'required|string|unique:users|max:255',
         'email' => 'required|email|unique:users|max:255',
-        'password' => 'required|string|min:8|confirmed',
+        'password' => 'required|string|min:8',
     ]);
 
+    $user = $request->all();
+    $user['password'] = Hash::make($request->password);
 
-    // Create a new user
-    $user = User::create([
-        'name' => $validatedData['name'],
-        'email' => $validatedData['email'],
-        'password' => bcrypt($validatedData['password']),
-    ]);
+    User::create($user);
 
+    // $user = User::create([
+    //     'Fname' => $request->Fname,
+    //     'Lname' => $request->Lname,
+    //     'phone' => $request->phone,
+    //     'email' => $request->email,
+    //     'password' => Hash::make($validatedData['password']),
+    //     'bio' => $request->input('bio', null),
+    //     'github' => $request->input('github', null),
+    //     'linkedin' => $request->input('linkedin', null),
+    // ]);
+    // User::create([
+    //     $validatedData,
+    // ]);
 
-    if ($user) {
-        // Authentication successful
-        return redirect()->route('login'); // Redirect to the intended page or your dashboard
-    } else {
-        // Authentication failed
-        return redirect()->route('register');
-    }
+    // Redirect the user to the appropriate page
+    return redirect()->route('login')->with('success', 'Account created successfully');
+
+    
     // You can also log in the user if needed
 
     // Redirect to a success page or perform any other action
@@ -63,7 +72,7 @@ class AuthController extends Controller
             // session()->put('role', $user->role);
             session()->put([
                 'role' => $user->role,
-                'name' => $user->name,
+                'Fname' => $user->Fname,
                 // Add more parameters as needed
             ]);
             // dd(session('role'));
