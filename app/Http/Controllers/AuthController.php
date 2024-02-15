@@ -73,7 +73,7 @@ public function signup(Request $request)
             session()->put([
                 'role' => $user->role,
                 'Fname' => $user->Fname,
-                // Add more parameters as needed
+                'user_id' => $user->id,
             ]);
             // dd(session('role'));
             return redirect()->route('books.index'); // Redirect to the intended page or your dashboard
