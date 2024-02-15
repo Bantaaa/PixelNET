@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Schema;
 
 class PostController extends Controller
 {
@@ -46,43 +44,21 @@ class PostController extends Controller
         //     'image'=>$request->image,
         // ]);
         $post['id_user'] = session('user_id');
-        if ($image = $request->file('image')) {
+
+        if($image = $request->file('image')){
             $destinationPath = 'images/';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
+            $profileImage = date('YmdHis').".".$image->getClientOriginalExtension();
+            $image->move($destinationPath,$profileImage);
             $post['image'] = "$profileImage";
             Post::create($post);
             return redirect()->route('home');
+        }else{
+            $post['image'] = "null";
+            Post::create($post);
+            return redirect()->route('home');   
         }
+        
     }
-
-    public function addLike(Request $request, string $id)
-    {
-        $post = Post::findOrFail($id);
-        $likes = json_decode($post->like, true) ?? [];
-
-
-
-
-        if (!in_array($request->user()->id, array_column($likes, 'id'))) {
-            $likes[] = ['id' => $request->user()->id];
-            $post->like = json_encode($likes);
-            $post->save();
-        } else {
-            $key = array_search(4, array_column($likes, 'id'));
-            unset($likes[$key]);
-            $post->like = json_encode($likes);
-            $post->save();
-        }
-
-        return redirect()->route('home');
-    }
-
-
-
-
-
-
 
     /**
      * Display the specified resource.
