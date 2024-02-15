@@ -22,7 +22,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.creatPost');
+        return view('post.createPost');
     }
 
     /**
