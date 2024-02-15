@@ -64,7 +64,6 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $likes = json_decode($post->like, true) ?? [];
-        echo "test";
 
 
 
