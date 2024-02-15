@@ -30,4 +30,10 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/post' , [PostController::class , 'create'])->name('post');
 Route::post('/post/create' , [PostController::class , 'store'])->name('create');
+// test
+Route::post('/register', [AuthController::class, 'signup'])->name('register');
+Route::get('/login', [AuthController::class, 'auth'])->name('login');
+Route::post('/login', [AuthController::class, 'signin'])->name('login');// Route::post('/custom-registration', [AuthController::class, 'customRegistration'])->name('register.custom');
+// Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 

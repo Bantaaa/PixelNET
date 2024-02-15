@@ -44,6 +44,7 @@ class PostController extends Controller
         //     'image'=>$request->image,
         // ]);
         $post['id_user'] = session('user_id');
+
         if($image = $request->file('image')){
             $destinationPath = 'images/';
             $profileImage = date('YmdHis').".".$image->getClientOriginalExtension();
@@ -51,6 +52,10 @@ class PostController extends Controller
             $post['image'] = "$profileImage";
             Post::create($post);
             return redirect()->route('home');
+        }else{
+            $post['image'] = "null";
+            Post::create($post);
+            return redirect()->route('home');   
         }
         
     }
