@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -12,7 +13,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $post = Post::latest()->paginate(6);
+        return view('home', compact('post'));
     }
 
     /**
@@ -20,7 +22,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('post.creatPost');
     }
 
     /**
@@ -28,7 +30,29 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $request->validate([
+        //     'titer' => 'required|string',
+        //     'content' => 'required|string',
+        //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // ]);
+
+        $post = $request->all();
+        // Post::create([
+        //     'titer' => $request->titer,
+        //     'content' => $request->content,
+        //     'id_user'=> session('user_id'),
+        //     'image'=>$request->image,
+        // ]);
+        $post['id_user'] = session('user_id');
+        if($image = $request->file('image')){
+            $destinationPath = 'images/';
+            $profileImage = date('YmdHis').".".$image->getClientOriginalExtension();
+            $image->move($destinationPath,$profileImage);
+            $post['image'] = "$profileImage";
+            Post::create($post);
+            return redirect()->route('home');
+        }
+        
     }
 
     /**
@@ -62,7 +86,4 @@ class PostController extends Controller
     {
         //
     }
-    
-
 }
-

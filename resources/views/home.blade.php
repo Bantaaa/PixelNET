@@ -7,60 +7,61 @@
 
         <!-- Posts Section -->
         <section class="w-full md:w-2/3 flex flex-col items-center px-3">
-
-            <article class="flex flex-col shadow my-4">
-                <!-- Article Image -->
-                <a href="#" class="hover:opacity-75">
-                  <img src="https://source.unsplash.com/collection/1346951/1000x500?sig=1">
-                </a>
-                <div class="bg-white flex flex-col justify-start p-6">
-                  <a href="#" class="text-blue-700 text-sm font-bold uppercase pb-4">Technology</a>
-                  <a href="#" class="text-3xl font-bold hover:text-gray-700 pb-4">Lorem Ipsum Dolor Sit Amet Dolor Sit Amet</a>
-                  <p href="#" class="text-sm pb-3">
-                    By <a href="#" class="font-semibold hover:text-gray-800">David Grzyb</a>, Published on April 25th, 2020
-                  </p>
-                  <a href="#" class="pb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis porta dui. Ut eu iaculis massa. Sed ornare ligula lacus, quis iaculis dui porta volutpat. In sit amet posuere magna..</a>
-                  <div class="flex items-center justify-between">
-                    <button class="flex items-center gap-1 text-gray-800 hover:text-black">
-                      <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                        <path d="M12 21.35l-1.45-1.32C6.11 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-4.11 6.86-8.55 11.54L12 21.35z" />
-                      </svg>
-                      <span>42 Likes</span>
-                    </button>
-                    <a href="#" class="uppercase text-gray-800 hover:text-black">Continue Reading <i class="fas fa-arrow-right"></i></a>
-                  </div>
-                  <div class="mt-4">
-                    <h2 class="text-lg font-bold mb-2">Comments</h2>
-                    <div class="p-4 bg-gray-100 rounded">
-                      <div class="flex items-start space-x-4">
-                        <img src="https://placekitten.com/40/40" alt="User Avatar" class="w-8 h-8 rounded-full">
-                        <div>
-                          <p class="font-semibold">John Doe</p>
-                          <p class="text-sm">This is a great article! Thanks for sharing.</p>
-                        </div>
-                      </div>
-                      <div class="flex items-start mt-4 space-x-4">
-                        <img src="https://placekitten.com/40/40" alt="User Avatar" class="w-8 h-8 rounded-full">
-                        <div>
-                          <p class="font-semibold">Jane Smith</p>
-                          <p class="text-sm">I found this very informative. Keep up the good work!</p>
-                        </div>
-                      </div>
+          @foreach ($post as $item)
+          <article class="flex flex-col shadow my-4">
+            <!-- Article Image -->
+            <a href="#" class="hover:opacity-75">
+              <img src="/images/{{$item->image}}">
+            </a>
+            <div class="bg-white flex flex-col justify-start p-6">
+              <a href="#" class="pb-6">{{$item->content}}</a>
+              <div class="flex items-center justify-between">
+                <button class="flex items-center gap-1 text-gray-800 hover:text-black">
+                  <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C6.11 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-4.11 6.86-8.55 11.54L12 21.35z" />
+                  </svg>
+                  <span>42 Likes</span>
+                </button>
+                <a href="#" class="uppercase text-gray-800 hover:text-black">Continue Reading <i class="fas fa-arrow-right"></i></a>
+              </div>
+              <div class="mt-4">
+                <h2 class="text-lg font-bold mb-2">Comments</h2>
+                <div class="p-4 bg-gray-100 rounded">
+                  <div class="flex items-start space-x-4">
+                    <img src="https://placekitten.com/40/40" alt="User Avatar" class="w-8 h-8 rounded-full">
+                    <div>
+                      <p class="font-semibold">John Doe</p>
+                      <p class="text-sm">This is a great article! Thanks for sharing.</p>
                     </div>
-                    <div class="mt-4">
-                      <h2 class="text-lg font-bold mb-2">Add a Comment</h2>
-                      <div class="flex items-start space-x-4">
-                        <img src="https://placekitten.com/40/40" alt="User Avatar" class="w-8 h-8 rounded-full">
-                        <div class="flex flex-col w-full">
-                          <input type="text" class="border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500 p-2" placeholder="Write your comment">
-                          <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 mt-2 rounded">Post Comment</button>
-                        </div>
-                      </div>
+                  </div>
+                  <div class="flex items-start mt-4 space-x-4">
+                    <img src="https://placekitten.com/40/40" alt="User Avatar" class="w-8 h-8 rounded-full">
+                    <div>
+                      <p class="font-semibold">Jane Smith</p>
+                      <p class="text-sm">I found this very informative. Keep up the good work!</p>
                     </div>
                   </div>
                 </div>
-              </article>
+                <div class="mt-4">
+                  <h2 class="text-lg font-bold mb-2">Add a Comment</h2>
+                  <div class="flex items-start space-x-4">
+                    <img src="https://placekitten.com/40/40" alt="User Avatar" class="w-8 h-8 rounded-full">
+                    <div class="flex flex-col w-full">
+                      <input type="text" class="border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500 p-2" placeholder="Write your comment">
+                      <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 mt-2 rounded">Post Comment</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+          @endforeach
 
+          <div class="d-flex justify-content-center mt-3">
+            {{ $post->links() }}
+        </div>
+    
+            
             <!-- Pagination -->
             <div class="flex items-center py-8">
                 <a href="#" class="h-10 w-10 bg-blue-800 hover:bg-blue-600 font-semibold text-white text-sm flex items-center justify-center">1</a>
