@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment;
+use App\Models\Likes;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,11 +15,18 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
         $post = Post::latest()->paginate(6);
-        return view('home', compact('post'));
+        $likes_count = [];
+        // foreach ($post as $post) {
+        //     $likes_count[$post->id] = Likes::where('id_post', $post->id)->count();
+        // }
+
+        return view('home', compact('post', 'likes_count'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -59,25 +68,78 @@ class PostController extends Controller
     public function addLike(Request $request, string $id)
     {
         $post = Post::findOrFail($id);
-        $likes = json_decode($post->like, true) ?? [];
+        $user_id = $request->user()->id;
 
+        $existing_like = Likes::where('id_user', $user_id)->where('id_post', $id)->first();
+        if ($post) {
+            if (!$existing_like) {
+                Likes::create([
+                    'id_user' => $user_id,
+                    'id_post' => $id,
+                ]);
 
-
-
-        if (!in_array($request->user()->id, array_column($likes, 'id'))) {
-            $likes[] = ['id' => $request->user()->id];
-            $post->like = json_encode($likes);
-            $post->save();
-        } else {
-            $key = array_search(4, array_column($likes, 'id'));
-            unset($likes[$key]);
-            $post->like = json_encode($likes);
-            $post->save();
+                return redirect()->route('home')->with('success', 'Post liked successfully');
+            } else {
+                // Redirection si l'utilisateur a déjà aimé ce post
+                return redirect()->route('home')->with('error', 'You have already liked this post');
+            }
         }
-
-        return redirect()->route('home');
     }
 
+
+    // public function addLike(Request $request, string $id)
+    // {
+    //     $post = Post::findOrFail($id);
+    //     $likes = json_decode($post->like, true) ?? [];
+
+
+
+
+    //     if (!in_array($request->user()->id, array_column($likes, 'id'))) {
+    //         $likes[] = ['id' => $request->user()->id];
+    //         $post->like = json_encode($likes);
+    //         $post->save();
+    //     } else {
+    //         $key = array_search(4, array_column($likes, 'id'));
+    //         unset($likes[$key]);
+    //         $post->like = json_encode($likes);
+    //         $post->save();
+    //     }
+
+    //     return redirect()->route('home');
+    // }
+
+    public function addComment(Request $request, string $id)
+    {
+        $user_id = $request->user()->id;
+        $post = Post::findOrFail($id);
+
+        if ($post) {
+            Comment::create([
+                'id_user' => $user_id,
+                'id_post' => $id,
+                'content' => $request->content
+            ]);
+            return redirect()->route('home')->with('success', 'Post liked successfully');
+        }
+
+
+
+
+
+        // if (!in_array($request->user()->id, array_column($likes, 'id'))) {
+        //     $likes[] = ['id' => $request->user()->id , 'commente' => $request->commente];
+        //     $post->like = json_encode($likes);
+        //     $post->save();
+        // } else {
+        //     $key = array_search(4, array_column($likes, 'id'));
+        //     unset($likes[$key]);
+        //     $post->like = json_encode($likes);
+        //     $post->save();
+        // }
+
+
+    }
 
 
 

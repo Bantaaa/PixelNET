@@ -9,7 +9,7 @@
         <section class="w-full md:w-2/3 flex flex-col items-center px-3">
           @foreach ($post as $item)
           <article class="flex flex-col shadow my-4">
-            <!-- Article Image -->
+
             <a href="#" class="hover:opacity-75">
               <img src="/images/{{$item->image}}">
             </a>
@@ -29,6 +29,12 @@
               </div>
               <div class="mt-4">
                 <h2 class="text-lg font-bold mb-2">Comments</h2>
+
+                <form action="{{ route('post.commente', ['id' => $item->id]) }}" method="POST">
+                  @csrf
+                  <input type="text" name="content" placeholder="add commints">
+                  <button type="submit">add Comment</button>
+              </form>
                 <div class="p-4 bg-gray-100 rounded">
                   <div class="flex items-start space-x-4">
                     <img src="https://placekitten.com/40/40" alt="User Avatar" class="w-8 h-8 rounded-full">
