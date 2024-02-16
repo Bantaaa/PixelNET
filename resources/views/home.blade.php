@@ -7,31 +7,40 @@
 
         <!-- Posts Section -->
         <section class="w-full md:w-2/3 flex flex-col items-center px-3">
-          @foreach ($post as $item)
+          @foreach ($posts as $post)
           <article class="flex flex-col shadow-md my-4 custom-width">
     <div class="bg-white flex flex-col justify-start p-6">
         <div class="flex items-center space-x-4">
             <img src="{{ asset('images/2919906.png') }}" alt="Profile Icon" class="w-8 h-8 rounded-full">
             <p class="font-semibold">Bilal Ez-zaim</p>
         </div>
-        <a href="#" class="pb-6 mt-2">{{$item->content}}</a>
+        <a href="#" class="pb-6 mt-2">{{$post->content}}</a>
     </div>
-    @if($item->image != 'null')
+    @if($post->image != 'null')
     <!-- Article Image -->
     <a href="#" class="mx-auto">
-        <img src="/images/{{$item->image}}" width="600" height="315">
+        <img src="/images/{{$post->image}}" width="600" height="315">
     </a>
     @endif
     <div class="bg-white flex flex-col justify-start p-6">
         <div class="flex items-center justify-between">
-        <form action="{{ route('post.like', ['id' => $item->id]) }}" method="POST">
+        <form action="{{ route('post.like', ['id' => $post->id]) }}" method="POST">
                     @csrf
-            <button type="submit" class="flex items-center gap-1 text-gray-800 hover:text-black">
-                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                    <path d="M12 21.35l-1.45-1.32C6.11 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-4.11 6.86-8.55 11.54L12 21.35z" />
-                </svg>
-                <span>42</span>
-            </button>
+
+                    @if(session('alreadyliked') && isset(session('alreadyliked')[$post->id]) && session('alreadyliked')[$post->id])
+                    <button type="submit" class="flex items-center gap-1 text-red-500 hover:text-red">
+                    
+                    <svg id="heart-icon" class="w-4 h-4 text-red-500 fill-current" viewBox="0 0 24 24">
+    <path d="M12 21.35L5.27 17.47C2.67 15.82 1 13.23 1 10.5C1 7.42 3.42 5 6.5 5C8.07 5 9.5 5.77 10.5 7C11.5 5.77 12.93 5 14.5 5C17.58 5 20 7.42 20 10.5C20 13.23 18.33 15.82 15.73 17.47L12 21.35Z"/>
+</svg>
+@else
+<button type="submit" class="flex items-center gap-1 text-gray-800 hover:text-black">
+<svg id="heart-icon" class="w-4 h-4 text-gray-800 fill-current" viewBox="0 0 24 24">
+    <path d="M12 21.35L5.27 17.47C2.67 15.82 1 13.23 1 10.5C1 7.42 3.42 5 6.5 5C8.07 5 9.5 5.77 10.5 7C11.5 5.77 12.93 5 14.5 5C17.58 5 20 7.42 20 10.5C20 13.23 18.33 15.82 15.73 17.47L12 21.35Z"/>
+</svg>
+@endif
+    <span>{{ $likes_count[$post->id] }}</span>
+</button>
             
             </form>
             <a href="#" class="uppercase text-gray-800 hover:text-black">Continue Reading <i class="fas fa-arrow-right"></i></a>
@@ -59,7 +68,7 @@
                 <div class="flex items-start space-x-4">
                     <img src="{{ asset('images/2919906.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full">
                     <div class="flex flex-col w-full">
-                    <form action="{{ route('post.comment', ['id' => $item->id]) }}" method="POST">
+                    <form action="{{ route('post.comment', ['id' => $post->id]) }}" method="POST">
                             @csrf
                             <input name="content" type="text" class="border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500 p-2" placeholder="Write your comment">
                             <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 mt-2 rounded">Post Comment</button>
@@ -73,7 +82,7 @@
           @endforeach
 
           <div class="d-flex justify-content-center mt-3">
-            {{ $post->links() }}
+            {{ $posts->links() }}
         </div>
     
             

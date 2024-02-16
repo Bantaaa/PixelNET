@@ -76,7 +76,7 @@ public function signup(Request $request)
                 'user_id' => $user->id,
             ]);
             // dd(session('role'));
-            return redirect()->route('books.index'); // Redirect to the intended page or your dashboard
+            return redirect()->route('home'); // Redirect to the intended page or your dashboard
         } else {
             // Authentication failed
             return redirect()->route('register');

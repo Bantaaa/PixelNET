@@ -16,13 +16,12 @@ class PostController extends Controller
     
     public function index()
     {
-        $post = Post::latest()->paginate(6);
+        $posts = Post::latest()->paginate(6);
         $likes_count = [];
-        // foreach ($post as $post) {
-        //     $likes_count[$post->id] = Likes::where('id_post', $post->id)->count();
-        // }
-
-        return view('home', compact('post', 'likes_count'));
+        foreach ($posts as $post) {
+            $likes_count[$post->id] = Likes::where('id_post', $post->id)->count();
+        }
+        return view('home', compact('posts', 'likes_count'));
     }
 
 
@@ -45,25 +44,25 @@ class PostController extends Controller
         //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         // ]);
 
-        $post = $request->all();
+        $posts = $request->all();
         // Post::create([
         //     'titer' => $request->titer,
         //     'content' => $request->content,
         //     'id_user'=> session('user_id'),
         //     'image'=>$request->image,
         // ]);
-        $post['id_user'] = session('user_id');
+        $posts['id_user'] = session('user_id');
 
         if($image = $request->file('image')){
             $destinationPath = 'images/';
             $profileImage = date('YmdHis').".".$image->getClientOriginalExtension();
             $image->move($destinationPath,$profileImage);
-            $post['image'] = "$profileImage";
-            Post::create($post);
+            $posts['image'] = "$profileImage";
+            Post::create($posts);
             return redirect()->route('home');
         }else{
-            $post['image'] = "null";
-            Post::create($post);
+            $posts['image'] = "null";
+            Post::create($posts);
             return redirect()->route('home');   
         }
         
@@ -71,20 +70,37 @@ class PostController extends Controller
 
     public function addLike(Request $request, string $id)
     {
-        $post = Post::findOrFail($id);
+        $posts = Post::findOrFail($id);
         $user_id = $request->user()->id;
 
+        
+
         $existing_like = Likes::where('id_user', $user_id)->where('id_post', $id)->first();
-        if ($post) {
+
+        $likedPosts = session('alreadyliked', []);
+
+        if ($existing_like) {
+            $likedPosts[$id] = true;
+        } else {
+            $likedPosts[$id] = false;
+        }
+
+        
+        session()->put('alreadyliked', $likedPosts);
+        
+        // dd($existing_like);
+        if ($posts) {
             if (!$existing_like) {
                 Likes::create([
                     'id_user' => $user_id,
                     'id_post' => $id,
                 ]);
+                
 
                 return redirect()->route('home')->with('success', 'Post liked successfully');
             } else {
                 // Redirection si l'utilisateur a déjà aimé ce post
+                
                 return redirect()->route('home')->with('error', 'You have already liked this post');
             }
         }
@@ -115,9 +131,9 @@ class PostController extends Controller
     public function addComment(Request $request, string $id)
     {
         $user_id = $request->user()->id;
-        $post = Post::findOrFail($id);
+        $posts = Post::findOrFail($id);
 
-        if ($post) {
+        if ($posts) {
             Comment::create([
                 'id_user' => $user_id,
                 'id_post' => $id,
