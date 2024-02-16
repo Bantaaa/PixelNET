@@ -13,7 +13,7 @@
 <body>
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form action="{{ route('login') }}" method="POST">
+            <form action="{{ route('register') }}" method="POST">
             @csrf
                 <h1>Create Account</h1>
                 
