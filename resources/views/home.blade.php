@@ -9,7 +9,7 @@
         <section class="w-full md:w-2/3 flex flex-col items-center px-3">
           @foreach ($post as $item)
           <article class="flex flex-col shadow my-4">
-
+            <!-- Article Image -->
             <a href="#" class="hover:opacity-75">
               <img src="/images/{{$item->image}}">
             </a>
@@ -29,41 +29,35 @@
               </div>
               <div class="mt-4">
                 <h2 class="text-lg font-bold mb-2">Comments</h2>
-
-                <form action="{{ route('post.commente', ['id' => $item->id]) }}" method="POST">
-                  @csrf
-                  <input type="text" name="content" placeholder="add commints">
-                  <button type="submit">add Comment</button>
-              </form>
                 <div class="p-4 bg-gray-100 rounded">
                   <div class="flex items-start space-x-4">
                     <img src="https://placekitten.com/40/40" alt="User Avatar" class="w-8 h-8 rounded-full">
                     <div>
-                      <p class="font-semibold">John Doe</p>
-                      <p class="text-sm">This is a great article! Thanks for sharing.</p>
+                        <p class="font-semibold">John Doe</p>
+                        <p class="text-sm">This is a great article! Thanks for sharing.</p>
                     </div>
-                  </div>
-                  <div class="flex items-start mt-4 space-x-4">
-                    <img src="https://placekitten.com/40/40" alt="User Avatar" class="w-8 h-8 rounded-full">
+                </div>
+                <div class="flex items-start mt-4 space-x-4">
+                    <img src="{{ asset('images/2919906.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full">
                     <div>
-                      <p class="font-semibold">Jane Smith</p>
-                      <p class="text-sm">I found this very informative. Keep up the good work!</p>
+                        <p class="font-semibold">Jane Smith</p>
+                        <p class="text-sm">I found this very informative. Keep up the good work!</p>
                     </div>
-                  </div>
                 </div>
-                <div class="mt-4">
-                  <h2 class="text-lg font-bold mb-2">Add a Comment</h2>
-                  <div class="flex items-start space-x-4">
-                    <img src="https://placekitten.com/40/40" alt="User Avatar" class="w-8 h-8 rounded-full">
-                    <div class="flex flex-col w-full">
-                      <input type="text" class="border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500 p-2" placeholder="Write your comment">
-                      <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 mt-2 rounded">Post Comment</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-          </article>
+            <div class="mt-4">
+                <h2 class="text-lg font-bold mb-2">Add a Comment</h2>
+                <div class="flex items-start space-x-4">
+                    <img src="{{ asset('images/2919906.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full">
+                    <div class="flex flex-col w-full">
+                        <input type="text" class="border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500 p-2" placeholder="Write your comment">
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 mt-2 rounded">Post Comment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
           @endforeach
 
           <div class="d-flex justify-content-center mt-3">
