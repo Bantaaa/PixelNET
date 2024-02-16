@@ -31,5 +31,5 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/post' , [PostController::class , 'create'])->name('post');
 Route::post('/post/create' , [PostController::class , 'store'])->name('create');
 Route::post('/posts/{id}/like', [PostController::class, 'addLike'])->name('post.like');
-
+Route::post('/posts/{id}/commente', [PostController::class, 'addComment'])->name('post.commente');
 
