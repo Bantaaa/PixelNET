@@ -29,6 +29,12 @@
               </div>
               <div class="mt-4">
                 <h2 class="text-lg font-bold mb-2">Comments</h2>
+
+                <form action="{{ route('post.commente', ['id' => $item->id]) }}" method="POST">
+                  @csrf
+                  <input type="text" name="content" placeholder="add commints">
+                  <button type="submit">add Comment</button>
+              </form>
                 <div class="p-4 bg-gray-100 rounded">
                   <div class="flex items-start space-x-4">
                     <img src="https://placekitten.com/40/40" alt="User Avatar" class="w-8 h-8 rounded-full">
@@ -50,8 +56,8 @@
                 <div class="flex items-start space-x-4">
                     <img src="{{ asset('images/2919906.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full">
                     <div class="flex flex-col w-full">
-                        <input type="text" class="border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500 p-2" placeholder="Write your comment">
-                        <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 mt-2 rounded">Post Comment</button>
+                      <input type="text" class="border rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500 p-2" placeholder="Write your comment">
+                      <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 mt-2 rounded">Post Comment</button>
                     </div>
                 </div>
             </div>
