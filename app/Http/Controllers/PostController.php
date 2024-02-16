@@ -7,8 +7,6 @@ use App\Models\Comment;
 use App\Models\Likes;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Schema;
 
 class PostController extends Controller
 {
@@ -33,7 +31,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.creatPost');
+        return view('post.createPost');
     }
 
     /**
@@ -55,14 +53,20 @@ class PostController extends Controller
         //     'image'=>$request->image,
         // ]);
         $post['id_user'] = session('user_id');
-        if ($image = $request->file('image')) {
+
+        if($image = $request->file('image')){
             $destinationPath = 'images/';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
+            $profileImage = date('YmdHis').".".$image->getClientOriginalExtension();
+            $image->move($destinationPath,$profileImage);
             $post['image'] = "$profileImage";
             Post::create($post);
             return redirect()->route('home');
+        }else{
+            $post['image'] = "null";
+            Post::create($post);
+            return redirect()->route('home');   
         }
+        
     }
 
     public function addLike(Request $request, string $id)
@@ -94,7 +98,6 @@ class PostController extends Controller
 
 
 
-
     //     if (!in_array($request->user()->id, array_column($likes, 'id'))) {
     //         $likes[] = ['id' => $request->user()->id];
     //         $post->like = json_encode($likes);
@@ -123,6 +126,7 @@ class PostController extends Controller
             return redirect()->route('home')->with('success', 'Post liked successfully');
         }
 
+        echo"gg";
 
 
 

@@ -71,7 +71,7 @@ public function signup(Request $request)
             // Authentication successful
             // session()->put('role', $user->role);
             session()->put([
-                'role' => $user->role,
+                // 'role' => $user->role,
                 'Fname' => $user->Fname,
                 'user_id' => $user->id,
             ]);
