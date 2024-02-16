@@ -7,15 +7,26 @@ use App\Models\Comment;
 use App\Models\Likes;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    
+
     public function index()
     {
+
+        // $users = Comment::with('Post')->get();
+        // dd($users);
+    //     $posts = Post::join('comments', 'posts.id', '=', 'comments.id_post')
+    // ->join('users', 'posts.id_user', '=', 'users.id')
+    // ->select('posts.*', 'comments.content as comment_content', 'users.Fname', 'users.Lname')
+    // ->get();
+    //         dd($posts);
+
         $posts = Post::latest()->paginate(6);
         $likes_count = [];
         foreach ($posts as $post) {
@@ -52,20 +63,21 @@ class PostController extends Controller
         //     'image'=>$request->image,
         // ]);
         $posts['id_user'] = session('user_id');
+        $user = Auth::user();
+        $userName = $user->Fname . ' ' . $user->Lname;
 
-        if($image = $request->file('image')){
+        if ($image = $request->file('image')) {
             $destinationPath = 'images/';
-            $profileImage = date('YmdHis').".".$image->getClientOriginalExtension();
-            $image->move($destinationPath,$profileImage);
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
             $posts['image'] = "$profileImage";
             Post::create($posts);
             return redirect()->route('home');
-        }else{
+        } else {
             $posts['image'] = "null";
             Post::create($posts);
-            return redirect()->route('home');   
+            return redirect()->route('home');
         }
-        
     }
 
     public function addLike(Request $request, string $id)
@@ -73,7 +85,7 @@ class PostController extends Controller
         $posts = Post::findOrFail($id);
         $user_id = $request->user()->id;
 
-        
+
 
         $existing_like = Likes::where('id_user', $user_id)->where('id_post', $id)->first();
 
@@ -85,9 +97,9 @@ class PostController extends Controller
             $likedPosts[$id] = false;
         }
 
-        
+
         session()->put('alreadyliked', $likedPosts);
-        
+
         // dd($existing_like);
         if ($posts) {
             if (!$existing_like) {
@@ -95,12 +107,12 @@ class PostController extends Controller
                     'id_user' => $user_id,
                     'id_post' => $id,
                 ]);
-                
+
 
                 return redirect()->route('home')->with('success', 'Post liked successfully');
             } else {
                 // Redirection si l'utilisateur a déjà aimé ce post
-                
+
                 return redirect()->route('home')->with('error', 'You have already liked this post');
             }
         }
@@ -142,7 +154,7 @@ class PostController extends Controller
             return redirect()->route('home')->with('success', 'Post liked successfully');
         }
 
-        echo"gg";
+        echo "gg";
 
 
 
