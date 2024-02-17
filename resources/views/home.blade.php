@@ -3,14 +3,14 @@
 @section('content')
 
 
-<div class="container mx-auto flex flex-wrap py-6">
+<div class="container mx-auto flex flex-wrap py-6 test">
 
     <!-- Posts Section -->
-    <section class="w-full md:w-2/3 flex flex-col items-center px-3">
+    <section class="w-full md:w-2/3 flex flex-col items-center px-3 ">
 
 
         <!-- POST FORM  -->
-        <article class="flex flex-col shadow-md my-4 custom-width">
+        <article class="flex flex-col shadow-md my-4 custom-width test2">
   <div class="w-full md:w-2/3 flex flex-col items-center justify-center px-3 custom-width">
     <div class="max-w-md bg-white rounded px-8 pt-6 pb-8 mb-4 custom-width">
       <h1 class="text-3xl font-bold mb-8 text-center">Create Post</h1>
@@ -26,7 +26,7 @@
         </div>
 
         <div class="mb-4">
-          <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Image:</label>
+          <!-- <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Image:</label> -->
           <label for="file-upload" class="relative cursor-pointer flex items-center justify-center px-3 py-2 border border-gray-300 rounded-md">
             <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>

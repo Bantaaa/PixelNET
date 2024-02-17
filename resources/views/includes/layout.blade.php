@@ -14,6 +14,12 @@
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,400&display=swap" rel="stylesheet">
 
     <style>
+        .test{
+            background-color: #f3f4f6;
+        }
+        .test2{
+            background-color: #ffffff;
+        }
         .custom-width {
     width: 600px;}
         .work-sans {
@@ -71,13 +77,13 @@
 
 </head>
 
-<body class="bg-white text-gray-600 work-sans leading-normal text-base tracking-normal">
+<body class="bg-white text-gray-600 work-sans leading-normal text-base tracking-normal test">
 
 
 
 
     <!--Nav-->
-    <nav id="header" class="w-full z-30 top-0 py-1">
+    <nav id="header" class="w-full z-30 top-0 py-1 test2">
         <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-6 py-3">
 
             <label for="menu-toggle" class="cursor-pointer md:hidden block">
