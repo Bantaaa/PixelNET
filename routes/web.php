@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +33,6 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/post' , [PostController::class , 'create'])->name('post');
 Route::post('/post/create' , [PostController::class , 'store'])->name('create');
-Route::post('/posts/{id}/like', [PostController::class, 'addLike'])->name('post.like');
-Route::post('/posts/{id}/commente', [PostController::class, 'addComment'])->name('post.comment');
+Route::post('/posts/{id}/like', [LikeController::class, 'addLike'])->name('post.like');
+Route::post('/posts/{id}/commente', [CommentController::class, 'addComment'])->name('post.comment');
 

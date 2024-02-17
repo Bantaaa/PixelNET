@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\Likes;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -16,13 +17,31 @@ class PostController extends Controller
     
      public function index()
      {
+
+        // $users = Comment::with('Post')->get();
+        // dd($users);
+    //     $posts = Post::join('comments', 'posts.id', '=', 'comments.id_post')
+    // ->join('users', 'posts.id_user', '=', 'users.id')
+    // ->select('posts.*', 'comments.content as comment_content', 'users.Fname', 'users.Lname')
+    // ->get();
+    //         dd($posts);
          $posts = Post::latest()->paginate(6);
          $likes_count = [];
+
+         
      
          foreach ($posts as $post) {
              $likes_count[$post->id] = Likes::where('id_post', $post->id)->count();
              $post->comments = Comment::where('id_post', $post->id)->with('user')->get();
              $post->user = $post->user->Fname;
+             $existing_like = Likes::where('id_user', Auth::user()->id)->where('id_post', $post->id)->first();
+             $likedPosts = session('alreadyliked', []);
+
+        if ($existing_like) {
+            $likedPosts[$post->id] = true;
+        } else {
+            $likedPosts[$post->id] = false;
+        }
          }
      
          return view('home', compact('posts', 'likes_count'));
@@ -72,43 +91,7 @@ class PostController extends Controller
         
     }
 
-    public function addLike(Request $request, string $id)
-    {
-        $posts = Post::findOrFail($id);
-        $user_id = $request->user()->id;
-
-        
-
-        $existing_like = Likes::where('id_user', $user_id)->where('id_post', $id)->first();
-
-        $likedPosts = session('alreadyliked', []);
-
-        if ($existing_like) {
-            $likedPosts[$id] = true;
-        } else {
-            $likedPosts[$id] = false;
-        }
-
-        
-        session()->put('alreadyliked', $likedPosts);
-        
-        // dd($existing_like);
-        if ($posts) {
-            if (!$existing_like) {
-                Likes::create([
-                    'id_user' => $user_id,
-                    'id_post' => $id,
-                ]);
-                
-
-                return redirect()->route('home')->with('success', 'Post liked successfully');
-            } else {
-                // Redirection si l'utilisateur a déjà aimé ce post
-                
-                return redirect()->route('home')->with('error', 'You have already liked this post');
-            }
-        }
-    }
+    
 
 
     // public function addLike(Request $request, string $id)
@@ -132,38 +115,7 @@ class PostController extends Controller
     //     return redirect()->route('home');
     // }
 
-    public function addComment(Request $request, string $id)
-    {
-        $user_id = $request->user()->id;
-        $posts = Post::findOrFail($id);
-
-        if ($posts) {
-            Comment::create([
-                'id_user' => $user_id,
-                'id_post' => $id,
-                'content' => $request->content
-            ]);
-            return redirect()->route('home')->with('success', 'Post liked successfully');
-        }
-
-        echo"gg";
-
-
-
-
-        // if (!in_array($request->user()->id, array_column($likes, 'id'))) {
-        //     $likes[] = ['id' => $request->user()->id , 'commente' => $request->commente];
-        //     $post->like = json_encode($likes);
-        //     $post->save();
-        // } else {
-        //     $key = array_search(4, array_column($likes, 'id'));
-        //     unset($likes[$key]);
-        //     $post->like = json_encode($likes);
-        //     $post->save();
-        // }
-
-
-    }
+    
 
 
 
