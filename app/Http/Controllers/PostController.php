@@ -51,10 +51,10 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        return view('post.createPost');
-    }
+    // public function create()
+    // {
+    //     return view('post.createPost');
+    // }
 
     /**
      * Store a newly created resource in storage.

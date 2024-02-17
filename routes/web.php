@@ -31,8 +31,8 @@ Route::post('/register', [AuthController::class, 'signup'])->name('register');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/post' , [PostController::class , 'create'])->name('post');
-Route::post('/post/create' , [PostController::class , 'store'])->name('create');
+Route::post('/' , [PostController::class , 'store'])->name('create');
+// Route::post('/post/create' , [PostController::class , 'store'])->name('create');
 Route::post('/posts/{id}/like', [LikeController::class, 'addLike'])->name('post.like');
 Route::post('/posts/{id}/commente', [CommentController::class, 'addComment'])->name('post.comment');
 

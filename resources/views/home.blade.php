@@ -7,6 +7,45 @@
 
     <!-- Posts Section -->
     <section class="w-full md:w-2/3 flex flex-col items-center px-3">
+
+
+        <!-- POST FORM  -->
+        <article class="flex flex-col shadow-md my-4 custom-width">
+  <div class="w-full md:w-2/3 flex flex-col items-center justify-center px-3 custom-width">
+    <div class="max-w-md bg-white rounded px-8 pt-6 pb-8 mb-4 custom-width">
+      <h1 class="text-3xl font-bold mb-8 text-center">Create Post</h1>
+
+      <form action="{{ route('create') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+
+        <div class="mb-4">
+          <div class="flex items-center space-x-4">
+            <img src="{{ asset('images/2919906.png') }}" alt="Profile Icon" class="w-8 h-8 rounded-full">
+            <input type="text" id="content" name="content" class="border rounded px-4 py-2 w-full" placeholder="Write something...">
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Image:</label>
+          <label for="file-upload" class="relative cursor-pointer flex items-center justify-center px-3 py-2 border border-gray-300 rounded-md">
+            <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            <span class="ml-2 text-gray-500">Choose a file</span>
+            <input id="file-upload" name="image" type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+          </label>
+          <!-- <span id="file-name" class="text-gray-500">No file chosen</span> -->
+        </div>
+
+        <div class="flex items-center justify-center">
+          <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</article>
+
+
         @foreach ($posts as $post)
         <article class="flex flex-col shadow-md my-4 custom-width">
             <div class="bg-white flex flex-col justify-start p-6">
@@ -67,6 +106,8 @@
                         @else
                         <p>No comments available.</p>
                         @endif
+
+                        
                     <div class="mt-4">
                         <h2 class="text-lg font-bold mb-2">Add a Comment</h2>
                         <div class="flex items-start space-x-4">

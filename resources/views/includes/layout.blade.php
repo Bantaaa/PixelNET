@@ -88,15 +88,6 @@
             </label>
             <input class="hidden" type="checkbox" id="menu-toggle" />
 
-            <!-- <div class="hidden md:flex md:items-center md:w-auto w-full order-3 md:order-1" id="menu">
-                <nav>
-                    <ul class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0">
-                        <li><a class="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="#">Shop</a></li>
-                        <li><a class="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="#">About</a></li>
-                    </ul>
-                </nav>
-            </div> -->
-
             <div class="order-1 md:order-2">
                 <a class="flex items-center tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl " href="#">
                     <svg class="fill-current text-gray-800 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -166,29 +157,17 @@
             </div>
         </div>
     </nav>
+
+    
+    
+  
+
      
     {{-- l'emplacement des code des pages --}}
     @yield('content')
 
 
     <footer class="w-full border-t bg-white pb-12">
-        <!-- <div
-            class="relative w-full flex items-center invisible md:visible md:pb-12"
-            x-data="getCarouselData()"
-        >
-            <button
-                class="absolute bg-blue-800 hover:bg-blue-700 text-white text-2xl font-bold hover:shadow rounded-full w-16 h-16 ml-12"
-                x-on:click="decrement()">
-                &#8592;
-            </button>
-            <template x-for="image in images.slice(currentIndex, currentIndex + 6)" :key="images.indexOf(image)">
-                <img class="w-1/6 hover:opacity-75" :src="image">
-            </template>
-            <button
-                class="absolute right-0 bg-blue-800 hover:bg-blue-700 text-white text-2xl font-bold hover:shadow rounded-full w-16 h-16 mr-12"
-                x-on:click="increment()">
-                &#8594;
-            </button> -->
         </div>
         <div class="w-full container mx-auto flex flex-col items-center">
             <div class="flex flex-col md:flex-row text-center md:text-left md:justify-between py-6">
