@@ -14,15 +14,19 @@ class PostController extends Controller
      * Display a listing of the resource.
      */
     
-    public function index()
-    {
-        $posts = Post::latest()->paginate(6);
-        $likes_count = [];
-        foreach ($posts as $post) {
-            $likes_count[$post->id] = Likes::where('id_post', $post->id)->count();
-        }
-        return view('home', compact('posts', 'likes_count'));
-    }
+     public function index()
+     {
+         $posts = Post::latest()->paginate(6);
+         $likes_count = [];
+     
+         foreach ($posts as $post) {
+             $likes_count[$post->id] = Likes::where('id_post', $post->id)->count();
+             $post->comments = Comment::where('id_post', $post->id)->with('user')->get();
+             $post->user = $post->user->Fname;
+         }
+     
+         return view('home', compact('posts', 'likes_count'));
+     }
 
 
     /**
