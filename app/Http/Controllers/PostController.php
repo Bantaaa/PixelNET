@@ -64,7 +64,7 @@ class PostController extends Controller
         // ]);
         $posts['id_user'] = session('user_id');
         $user = Auth::user();
-        $userName = $user->Fname . ' ' . $user->Lname;
+        // $userName = $user->Fname . ' ' . $user->Lname;
 
         if ($image = $request->file('image')) {
             $destinationPath = 'images/';
