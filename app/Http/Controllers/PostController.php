@@ -31,9 +31,7 @@ class PostController extends Controller
     $user = Auth::user();
          $posts = Post::latest()->paginate(6);
          $likes_count = [];
-
-        $notifications = Notification::where('user_id', $user->id)->get();
-
+    
          
      
          foreach ($posts as $post) {
@@ -41,7 +39,14 @@ class PostController extends Controller
              $post->comments = Comment::where('id_post', $post->id)->with('user')->get();
              $post->user = $post->user->Fname;
          }
-         return view('home', compact('posts', 'likes_count','notifications'));
+         if($user){
+            $notifications = Notification::where('user_id', $user->id)->get();
+            return view('home', compact('posts', 'likes_count','notifications'));
+         }
+         else{
+            return view('home', compact('posts', 'likes_count'));
+         }
+         
      }
 
 

@@ -126,6 +126,7 @@
                 </button>
                 <div id="notification-dropdown" class="absolute right-0 mt-2 py-2 w-96 bg-white rounded-md shadow-xl hidden">
     <!-- Dropdown content goes here -->
+    
     @foreach($notifications as $notification)
         <div class="flex items-center justify-between px-4 py-2 text-gray-800 hover:bg-gray-200">
             <span class="whitespace-nowrap overflow-hidden overflow-ellipsis">{{$notification->message}}</span>
@@ -136,6 +137,7 @@
         </div>
         <hr>
     @endforeach
+    
 </div>
             </div>
             @endif
