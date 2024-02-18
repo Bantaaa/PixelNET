@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Likes;
 use App\Models\Post;
+use App\Models\Notification;
+use App\Http\Controllers\NotificationController;
+
+
+
+
 
 class LikeController extends Controller
 {
@@ -35,18 +42,24 @@ class LikeController extends Controller
 
     public function addLike(Request $request, string $id)
 {
-    $posts = Post::findOrFail($id);
-    $user_id = $request->user()->id;
+    $post = Post::findOrFail($id);
+    $user = $request->user();
 
-    $existing_like = Likes::where('id_user', $user_id)->where('id_post', $id)->first();
+    $existing_like = Likes::where('id_user', $user->id)->where('id_post', $id)->first();
 
-    if ($posts) {
+    if ($post) {
         if (!$existing_like) {
             // User has not liked the post, so create a new like
             Likes::create([
-                'id_user' => $user_id,
+                'id_user' => $user->id,
                 'id_post' => $id,
             ]);
+
+            // Create a notification for the post owner
+            $notification = new Notification();
+            $notification->user_id = $post->id_user; // The user who created the post
+            $notification->message =  $post->User->Fname.' '.'has been liked.';
+            $notification->save();
 
             return redirect()->route('home')->with('success', 'Post liked successfully');
         } else {

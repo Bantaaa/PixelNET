@@ -7,6 +7,9 @@ use App\Models\Comment;
 use App\Models\Likes;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Models\Notification;
+use App\Models\User;
+
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -25,8 +28,11 @@ class PostController extends Controller
     // ->select('posts.*', 'comments.content as comment_content', 'users.Fname', 'users.Lname')
     // ->get();
     //         dd($posts);
+    $user = Auth::user();
          $posts = Post::latest()->paginate(6);
          $likes_count = [];
+
+        $notifications = Notification::where('user_id', $user->id)->get();
 
          
      
@@ -35,8 +41,7 @@ class PostController extends Controller
              $post->comments = Comment::where('id_post', $post->id)->with('user')->get();
              $post->user = $post->user->Fname;
          }
-     
-         return view('home', compact('posts', 'likes_count'));
+         return view('home', compact('posts', 'likes_count','notifications'));
      }
 
 
