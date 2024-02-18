@@ -10,6 +10,7 @@
 
 
         <!-- POST FORM  -->
+        @if(session('Fname'))
         <article class="flex flex-col shadow-md my-4 custom-width test2">
   <div class="w-full md:w-2/3 flex flex-col items-center justify-center px-3 custom-width">
     <div class="max-w-md bg-white rounded px-8 pt-6 pb-8 mb-4 custom-width">
@@ -44,6 +45,7 @@
     </div>
   </div>
 </article>
+@endif
 
 
         @foreach ($posts as $post)

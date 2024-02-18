@@ -34,42 +34,29 @@ class LikeController extends Controller
     }
 
     public function addLike(Request $request, string $id)
-    {
-        $posts = Post::findOrFail($id);
-        $user_id = $request->user()->id;
+{
+    $posts = Post::findOrFail($id);
+    $user_id = $request->user()->id;
 
-        
+    $existing_like = Likes::where('id_user', $user_id)->where('id_post', $id)->first();
 
-        $existing_like = Likes::where('id_user', $user_id)->where('id_post', $id)->first();
+    if ($posts) {
+        if (!$existing_like) {
+            // User has not liked the post, so create a new like
+            Likes::create([
+                'id_user' => $user_id,
+                'id_post' => $id,
+            ]);
 
-        $likedPosts = session('alreadyliked', []);
+            return redirect()->route('home')->with('success', 'Post liked successfully');
+        } else {
+            // User has already liked the post, so unlike it
+            $existing_like->delete();
 
-        // if ($existing_like) {
-        //     $likedPosts[$id] = true;
-        // } else {
-        //     $likedPosts[$id] = false;
-        // }
-
-        
-        session()->put('alreadyliked', $likedPosts);
-        
-        // dd($existing_like);
-        if ($posts) {
-            if (!$existing_like) {
-                Likes::create([
-                    'id_user' => $user_id,
-                    'id_post' => $id,
-                ]);
-                
-
-                return redirect()->route('home')->with('success', 'Post liked successfully');
-            } else {
-                // Redirection si l'utilisateur a déjà aimé ce post
-                
-                return redirect()->route('home')->with('error', 'You have already liked this post');
-            }
+            return redirect()->route('home')->with('success', 'Post unliked successfully');
         }
     }
+}
     /**
      * Display the specified resource.
      */
