@@ -38,7 +38,7 @@
         </div>
 
         <div class="flex items-center justify-center">
-          <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create</button>
+          <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create</button>
         </div>
       </form>
     </div>

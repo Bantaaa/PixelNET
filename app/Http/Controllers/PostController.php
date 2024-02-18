@@ -34,14 +34,6 @@ class PostController extends Controller
              $likes_count[$post->id] = Likes::where('id_post', $post->id)->count();
              $post->comments = Comment::where('id_post', $post->id)->with('user')->get();
              $post->user = $post->user->Fname;
-             $existing_like = Likes::where('id_user', Auth::user()->id)->where('id_post', $post->id)->first();
-             $likedPosts = session('alreadyliked', []);
-
-        if ($existing_like) {
-            $likedPosts[$post->id] = true;
-        } else {
-            $likedPosts[$post->id] = false;
-        }
          }
      
          return view('home', compact('posts', 'likes_count'));
@@ -51,10 +43,10 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    // public function create()
-    // {
-    //     return view('post.createPost');
-    // }
+    public function create()
+    {
+        return view('post.createPost');
+    }
 
     /**
      * Store a newly created resource in storage.
