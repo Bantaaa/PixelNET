@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Notification;
+
 
 class CommentController extends Controller
 {
@@ -29,7 +31,11 @@ class CommentController extends Controller
                 'id_post' => $id,
                 'content' => $request->content
             ]);
-            return redirect()->route('home')->with('success', 'Post liked successfully');
+            $notification = new Notification();
+            $notification->user_id = $posts->id_user; // The user who created the post
+            $notification->message =  session('Fname').' '.'has commented your post !';
+            $notification->save();
+            return redirect()->route('home');
         }
 
 

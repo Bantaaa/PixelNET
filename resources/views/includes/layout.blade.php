@@ -124,12 +124,19 @@
                     </svg>
                     <div class="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">{{count($notifications)}}</div>
                 </button>
-                <div id="notification-dropdown" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl hidden">
-                    <!-- Dropdown content goes here -->
-                    @foreach($notifications as $notification)
-                    <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-200">{{$notification->message}}</a>
-                    @endforeach
-                </div>
+                <div id="notification-dropdown" class="absolute right-0 mt-2 py-2 w-96 bg-white rounded-md shadow-xl hidden">
+    <!-- Dropdown content goes here -->
+    @foreach($notifications as $notification)
+        <div class="flex items-center justify-between px-4 py-2 text-gray-800 hover:bg-gray-200">
+            <span class="whitespace-nowrap overflow-hidden overflow-ellipsis">{{$notification->message}}</span>
+            <a class="text-gray-500 hover:text-red-700" href="{{ route('deleteNotification', ['id' => $notification->id]) }}">
+                x
+    </a>
+            
+        </div>
+        <hr>
+    @endforeach
+</div>
             </div>
             @endif
             <script>

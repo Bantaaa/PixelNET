@@ -49,7 +49,6 @@ class LikeController extends Controller
 
     if ($post) {
         if (!$existing_like) {
-            // User has not liked the post, so create a new like
             Likes::create([
                 'id_user' => $user->id,
                 'id_post' => $id,
@@ -58,12 +57,12 @@ class LikeController extends Controller
             // Create a notification for the post owner
             $notification = new Notification();
             $notification->user_id = $post->id_user; // The user who created the post
-            $notification->message =  $post->User->Fname.' '.'has liked your post !';
+            $notification->message =  session('Fname').' '.'has liked your post !';
             $notification->save();
 
             return redirect()->route('home')->with('success', 'Post liked successfully');
         } else {
-            // User has already liked the post, so unlike it
+            // unlike
             $existing_like->delete();
 
             return redirect()->route('home')->with('success', 'Post unliked successfully');

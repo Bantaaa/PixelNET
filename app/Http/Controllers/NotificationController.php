@@ -37,11 +37,24 @@ class NotificationController extends Controller
         'message' => $request->message,
     ]);
 
-            return redirect()->route('home');
-            // User has already liked the post, so unlike it
-        
+            return redirect()->route('home');        
     
 }
+
+public function deleteNotification(Request $request)
+{
+    $notificationId = $request->id;
+    $notification = Notification::find($notificationId);
+
+    if ($notification) {
+        $notification->delete();
+    }
+
+    return redirect()->route('home');
+
+}
+
+
     public function store(Request $request)
     {
         //

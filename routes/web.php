@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,5 +36,5 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/' , [PostController::class , 'store'])->name('create');
 // Route::post('/post/create' , [PostController::class , 'store'])->name('create');
 Route::post('/posts/{id}/like', [LikeController::class, 'addLike'])->name('post.like');
-Route::post('/posts/{id}/commente', [CommentController::class, 'addComment'])->name('post.comment');
-
+Route::post('/posts/{id}/comment', [CommentController::class, 'addComment'])->name('post.comment');
+Route::get('notifications/delete/{id}', [NotificationController::class, 'deleteNotification'])->name('deleteNotification');
