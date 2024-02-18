@@ -58,7 +58,7 @@ class LikeController extends Controller
             // Create a notification for the post owner
             $notification = new Notification();
             $notification->user_id = $post->id_user; // The user who created the post
-            $notification->message =  $post->User->Fname.' '.'has been liked.';
+            $notification->message =  $post->User->Fname.' '.'has liked your post !';
             $notification->save();
 
             return redirect()->route('home')->with('success', 'Post liked successfully');
