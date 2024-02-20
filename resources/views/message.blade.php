@@ -23,7 +23,7 @@
             @endforeach
         </div>
     
-        @if($messages->isEmpty())
+       
         <div class="mt-8">
             <h2 class="text-xl font-semibold mb-4">Ajouter un nouveau message</h2>
             <form action="{{ route('store') }}" method="POST">
@@ -33,7 +33,7 @@
                 <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Envoyer</button>
             </form>
         </div>
-    @endif
+   
     
     </div>
     

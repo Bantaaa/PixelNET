@@ -21,7 +21,6 @@ class MessageController extends Controller
     {
         $sender_id = $request->id;
         $receiver_id = Auth::id();
-        $this->sen = $sender_id;
         Session::put('receiver_id', $request->id);
         $sent_messages = Message::where('sender', $sender_id)->where('receiver', $receiver_id)->get();
         $received_messages = Message::where('sender', $receiver_id)->where('receiver', $sender_id)->get();
