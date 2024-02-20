@@ -13,27 +13,29 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach($messages as $message)
-           
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <p class="text-gray-700 text-lg">{{ $message->content }}</p>
-                <div class="mt-4 flex justify-between items-center">
-                    <span class="text-gray-500">{{ $message->created_at->diffForHumans() }}</span>
-                    <span class="text-blue-500">Envoyé par : {{ $message->sender }}</span>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <p class="text-gray-700 text-lg">{{ $message->content }}</p>
+                    <div class="mt-4 flex justify-between items-center">
+                        <span class="text-gray-500">{{ $message->created_at->diffForHumans() }}</span>
+                        <span class="text-blue-500">Envoyé par : {{ $message->sender }}</span>
+                    </div>
                 </div>
-            </div>
             @endforeach
         </div>
-
+    
+        @if($messages->isEmpty())
         <div class="mt-8">
             <h2 class="text-xl font-semibold mb-4">Ajouter un nouveau message</h2>
             <form action="{{ route('store') }}" method="POST">
                 @csrf
-                <input type="text" type="hidden" name="id" value=" {{ $message->receiver }}">
+                <input type="hidden" name="receiver_id" >
                 <textarea name="content" id="content" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500" placeholder="Votre message..." rows="4"></textarea>
                 <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Envoyer</button>
             </form>
         </div>
-
+    @endif
+    
     </div>
+    
 </body>
 </html>

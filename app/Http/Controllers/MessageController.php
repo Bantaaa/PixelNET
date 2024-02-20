@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,12 +13,24 @@ class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * 
      */
+    public $sen ;
+     
     public function index(Request $request)
     {
-        $messages = Message::where('receiver', $request->id)->get();
-        return view('message' , compact("messages"));
+        $sender_id = $request->id;
+        $receiver_id = Auth::id();
+        $this->sen = $sender_id;
+        Session::put('receiver_id', $request->id);
+        $sent_messages = Message::where('sender', $sender_id)->where('receiver', $receiver_id)->get();
+        $received_messages = Message::where('sender', $receiver_id)->where('receiver', $sender_id)->get();
+    
+        $messages = $sent_messages->merge($received_messages);
+
+        return view('message', compact('messages'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -46,10 +59,10 @@ class MessageController extends Controller
         $sender = $user->id;
         Message::create([
             'sender' => $sender,
-            'receiver' => $request->id,
+            'receiver' => Session::get('receiver_id'),
             'content' => $request->content
         ]);
-        return redirect('/message/'.$request->id) ;
+        return redirect('/message/'.Session::get('receiver_id'));
     }
 
     /**

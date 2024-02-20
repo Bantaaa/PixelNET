@@ -42,6 +42,7 @@ Route::get('notifications/delete/{id}', [NotificationController::class, 'deleteN
 
 // Route::get('/message/{id}', [MessageController::class, 'store'])->name("index");
 Route::post('/sendMessage', [MessageController::class, 'store'])->name('store');
+
 Route::get('/message/{id}', [MessageController::class, 'index'])->name('index1');
 
 Route::get('/user', [MessageController::class, 'create']);
