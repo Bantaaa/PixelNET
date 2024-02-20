@@ -41,34 +41,34 @@ class LikeController extends Controller
     }
 
     public function addLike(Request $request, string $id)
-{
-    $post = Post::findOrFail($id);
-    $user = $request->user();
+    {
+        $post = Post::findOrFail($id);
+        $user = $request->user();
 
-    $existing_like = Likes::where('id_user', $user->id)->where('id_post', $id)->first();
+        $existing_like = Likes::where('id_user', $user->id)->where('id_post', $id)->first();
 
-    if ($post) {
-        if (!$existing_like) {
-            Likes::create([
-                'id_user' => $user->id,
-                'id_post' => $id,
-            ]);
+        if ($post) {
+            if (!$existing_like) {
+                Likes::create([
+                    'id_user' => $user->id,
+                    'id_post' => $id,
+                ]);
 
-            // Create a notification for the post owner
-            Notification::create([
-                'user_id' => $post->id_user,
-             'message' => $user->Fname.' '.'has liked your post',
-            ]);
+                // Create a notification for the post owner
+                Notification::create([
+                    'user_id' => $post->id_user,
+                    'message' => $user->Fname . ' ' . 'has liked your post',
+                ]);
 
-            return redirect()->route('home')->with('success', 'Post liked successfully');
-        } else {
-            // unlike
-            $existing_like->delete();
+                return redirect()->route('home')->with('success', 'Post liked successfully');
+            } else {
+                // unlike
+                $existing_like->delete();
 
-            return redirect()->route('home')->with('success', 'Post unliked successfully');
+                return redirect()->route('home')->with('success', 'Post unliked successfully');
+            }
         }
     }
-}
     /**
      * Display the specified resource.
      */

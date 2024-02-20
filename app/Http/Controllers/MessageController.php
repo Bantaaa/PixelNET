@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Http\Controllers\Controller;
+use App\Models\Folows;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -37,8 +38,9 @@ class MessageController extends Controller
     public function create()
     {
         $users = User::all();
+        $follws = Folows::all();
 
-        return view('users' , compact("users"));
+        return view('users' , compact("users" , "follws"));
     }
 
     public function message()

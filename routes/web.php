@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FolowsController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostController;
@@ -46,3 +47,10 @@ Route::post('/sendMessage', [MessageController::class, 'store'])->name('store');
 Route::get('/message/{id}', [MessageController::class, 'index'])->name('index1');
 
 Route::get('/user', [MessageController::class, 'create']);
+
+
+Route::post('/unfollow/{id}', [FolowsController::class, 'destroy'])->name('unfollow');
+
+Route::post('/follows', [FolowsController::class, 'store'])->name('follow');
+
+Route::get('/follow', [FolowsController::class, 'follow'])->name('foll');
