@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
@@ -38,3 +39,9 @@ Route::post('/' , [PostController::class , 'store'])->name('create');
 Route::post('/posts/{id}/like', [LikeController::class, 'addLike'])->name('post.like');
 Route::post('/posts/{id}/comment', [CommentController::class, 'addComment'])->name('post.comment');
 Route::get('notifications/delete/{id}', [NotificationController::class, 'deleteNotification'])->name('deleteNotification');
+
+// Route::get('/message/{id}', [MessageController::class, 'store'])->name("index");
+Route::post('/sendMessage', [MessageController::class, 'store'])->name('store');
+Route::get('/message/{id}', [MessageController::class, 'index'])->name('index1');
+
+Route::get('/user', [MessageController::class, 'create']);
