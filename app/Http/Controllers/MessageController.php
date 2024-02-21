@@ -42,6 +42,19 @@ class MessageController extends Controller
 
         return view('users' , compact("users" , "follws"));
     }
+    public function pstman()
+    {
+        $users = User::all();
+        $follws = Folows::all();
+        
+
+        return response()->json(
+            ['user'=> $users,
+            'follws'=>$follws
+            ]
+        ) ;
+    }
+
 
     public function message()
     {

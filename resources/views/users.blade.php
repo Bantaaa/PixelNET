@@ -14,47 +14,47 @@
     <div class="container mx-auto py-8">
         <h1 class="text-3xl font-bold mb-8">Liste des Utilisateurs</h1>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            @foreach ($users as $user)
-                <div class="bg-white p-6 rounded-lg shadow-md" id="user_{{ $user->id }}">
-                    <p class="text-gray-700 text-lg">Nom d'utilisateur: {{ $user->username }}</p>
-                    <p class="text-gray-700 text-lg">Email: {{ $user->email }}</p>
-                    <div class="mt-8">
-                        <a href="{{ route('index1', ['id' => $user->id]) }}"
-                            class="inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Voir
-                            les Messages</a>
-                        
-                        @php
-                            $is_followed = false;
-                            foreach ($follws as $folo) {
-                                if ($folo->user_id == $user->id) {
-                                    $is_followed = true;
-                                    break;
-                                }
-                            }
-                        @endphp
-                        
-                        @if ($is_followed)
-                            <form action="{{ route('unfollow', ['id' => $user->id]) }}" method="POST"
-                                class="inline-block ml-2">
-                                @csrf
-                                <button type="submit"
-                                    class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">Ne
-                                    plus suivre</button>
-                            </form>
-                        @else
-                            <form action="{{ route('follow') }}" method="POST" class="inline-block ml-2">
-                                @csrf
-                                <input type="hidden" value="{{ $user->id }}" name="follower_id">
-                                <button type="submit"
-                                    class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">Suivre</button>
-                            </form>
-                        @endif
-                    </div>
-                </div>
-            @endforeach
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="data">
+           
         </div>
     </div>
+
+    <script>
+        let user = [];
+        let afficher = document.getElementById('data');
+        console.log(data)
+        fetch('http://127.0.0.1:8000/pstman')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                usre = data.user;
+
+                usre.forEach(element => {
+                    console.log(element.id);
+                    afficher.innerHTML += `
+                    <div class="bg-white p-6 rounded-lg shadow-md" >
+                    <p class="text-gray-700 text-lg">Nom d'utilisateur: ${element.name}</p>
+                    <p class="text-gray-700 text-lg">Email: ${element.email}</p>
+                    <div class="mt-8">
+                        <a href="/message/${element.id}"
+                            class="inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Voir
+                            les Messages</a>
+                    </div>
+                </div>
+        </div>
+    </div>
+                    `
+
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    </script>
 
 </body>
 

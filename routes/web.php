@@ -33,6 +33,8 @@ Route::get('/login', [AuthController::class, 'auth'])->name('login');
 Route::post('/login', [AuthController::class, 'signin'])->name('login');
 Route::post('/register', [AuthController::class, 'signup'])->name('register');
 
+Route::post('/reg', [AuthController::class, 'sig'])->name('register');
+
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::post('/' , [PostController::class , 'store'])->name('create');
@@ -48,6 +50,7 @@ Route::get('/message/{id}', [MessageController::class, 'index'])->name('index1')
 
 Route::get('/user', [MessageController::class, 'create']);
 
+Route::get('/pstman', [MessageController::class, 'pstman']);
 
 Route::post('/unfollow/{id}', [FolowsController::class, 'destroy'])->name('unfollow');
 

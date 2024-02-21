@@ -12,48 +12,44 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-   
-    public function auth(){
-        
-       return view("auth");
+
+    public function auth()
+    {
+
+        return view("auth");
     }
-public function signup(Request $request)
-{
-    $validatedData = $request->validate([
-        'Fname' => 'required|string|max:255',
-        'Lname' => 'required|string|max:255',
-        'phone' => 'required|string|unique:users|max:255',
-        'email' => 'required|email|unique:users|max:255',
-        'password' => 'required|string|min:8',
-    ]);
+    public function signup(Request $request)
+    {
+        $validatedData = $request->validate([
+            'Fname' => 'required|string|max:255',
+            'Lname' => 'required|string|max:255',
+            'phone' => 'required|string|unique:users|max:255',
+            'email' => 'required|email|unique:users|max:255',
+            'password' => 'required|string|min:8',
+        ]);
 
-    $user = $request->all();
-    $user['password'] = Hash::make($request->password);
+        $user = $request->all();
+        $user['password'] = Hash::make($request->password);
 
-    User::create($user);
+        User::create($user);
+        return redirect()->route('login')->with('success', 'Account created successfully');
+    }
 
-    // $user = User::create([
-    //     'Fname' => $request->Fname,
-    //     'Lname' => $request->Lname,
-    //     'phone' => $request->phone,
-    //     'email' => $request->email,
-    //     'password' => Hash::make($validatedData['password']),
-    //     'bio' => $request->input('bio', null),
-    //     'github' => $request->input('github', null),
-    //     'linkedin' => $request->input('linkedin', null),
-    // ]);
-    // User::create([
-    //     $validatedData,
-    // ]);
+    public function sig(Request $request)
+    {
+        $validatedData = $request->validate([
+            'Fname' => 'required|string|max:255',
+            'Lname' => 'required|string|max:255',
+            'phone' => 'required|string|unique:users|max:255',
+            'email' => 'required|email|unique:users|max:255',
+            'password' => 'required|string|min:8',
+        ]);
 
-    // Redirect the user to the appropriate page
-    return redirect()->route('login')->with('success', 'Account created successfully');
+        $user = $request->all();
+        $user['password'] = Hash::make($request->password);
 
-    
-    // You can also log in the user if needed
-
-    // Redirect to a success page or perform any other action
-    // return redirect()->route('success.page');
+        User::create($user);
+        return response()->json($user);
     }
     public function signin(Request $request)
     {
@@ -90,5 +86,4 @@ public function signup(Request $request)
 
         return redirect()->route('login'); // Redirect to your logout route after logout
     }
-
 }
