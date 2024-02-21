@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
+use App\Models\Folows;
+use App\Models\Likes;
+use App\Models\Message;
+use App\Models\Post;
 use App\Models\User;
 use App\Models\Reservation;
 
@@ -77,6 +82,22 @@ class AuthController extends Controller
             // Authentication failed
             return redirect()->route('register');
         }
+    }
+
+
+    public function supremerProfile(Request $request){
+        $id = Auth::id();
+        $likes = Likes::where('id_user', $id)->delete();
+        $messages = Message::where('sender', $id)->delete();
+        $follows = Folows::where('user_id', $id)->delete();
+        $comments = Comment::where('id_user', $id)->delete();
+        $posts = Post::where('id_user', $id)->delete();
+        $user = User::where('id', $id)->delete();
+        session()->flush();
+        return redirect()->route('login');
+      
+       
+
     }
 
     public function logout()

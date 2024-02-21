@@ -57,3 +57,5 @@ Route::post('/unfollow/{id}', [FolowsController::class, 'destroy'])->name('unfol
 Route::post('/follows', [FolowsController::class, 'store'])->name('follow');
 
 Route::get('/follow', [FolowsController::class, 'follow'])->name('foll');
+
+Route::get('/supremerProfile' , [AuthController::class , 'supremerProfile']);
