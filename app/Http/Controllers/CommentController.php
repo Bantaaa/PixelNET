@@ -31,10 +31,14 @@ class CommentController extends Controller
                 'id_post' => $id,
                 'content' => $request->content
             ]);
-            $notification = new Notification();
-            $notification->user_id = $posts->id_user; // The user who created the post
-            $notification->message =  session('Fname').' '.'has commented your post !';
-            $notification->save();
+            // $notification = new Notification();
+            // $notification->user_id = $posts->id_user; // The user who created the post
+            // $notification->message =  session('Fname').' '.'has commented your post !';
+            // $notification->save();
+            Notification::create([
+                'user_id' => $posts->id_user,
+                'message' => $user_id->Fname . ' ' . 'has commented your post',
+            ]);
             return redirect()->route('home');
         }
 

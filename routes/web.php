@@ -33,7 +33,7 @@ Route::get('/login', [AuthController::class, 'auth'])->name('login');
 Route::post('/login', [AuthController::class, 'signin'])->name('login');
 Route::post('/register', [AuthController::class, 'signup'])->name('register');
 
-Route::post('/reg', [AuthController::class, 'sig'])->name('register');
+// Route::post('/reg', [AuthController::class, 'sig'])->name('register');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 

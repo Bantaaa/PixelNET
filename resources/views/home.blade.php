@@ -55,7 +55,7 @@
                     <img src="{{ asset('images/2919906.png') }}" alt="Profile Icon" class="w-8 h-8 rounded-full">
                     <p class="font-semibold">{{$post->user}}</p>
                 </div>
-                <a href="#" class="pb-6 mt-2">{{$post->content}}</a>
+                <p class="pb-6 mt-2">{{$post->content}}</p>
             </div>
             @if($post->image != 'null')
             <!-- Article Image -->
