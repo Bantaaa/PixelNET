@@ -75,6 +75,7 @@ class AuthController extends Controller
                 // 'role' => $user->role,
                 'Fname' => $user->Fname,
                 'user_id' => $user->id,
+                'username' => $user->Fname.' '.$user->Lname,
             ]);
             // dd(session('role'));
             return redirect()->route('home'); // Redirect to the intended page or your dashboard

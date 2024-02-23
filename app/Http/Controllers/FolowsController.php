@@ -6,6 +6,7 @@ use App\Models\Folows;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Post;
 
 class FolowsController extends Controller
 {
@@ -17,7 +18,7 @@ class FolowsController extends Controller
         $id = Auth::id();
         $follows = Folows::where('user_id', $id)->with('user')->get();
 
-        return view('folow' , compact('follows'));
+        return view('folow', compact('follows'));
     }
 
     /**
@@ -31,21 +32,24 @@ class FolowsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, string $id)
     {
-
-        $followed = Folows::where('user_id', auth()->id())
-            ->where('follower_id', $request->follower_id)
-            ->first();
+        $user = $request->user();
+        $post = Post::findOrFail($id);
+        $followed = Folows::where('user_id', $user->id)->where('follower_id', auth()->id())->first();
 
 
         if (!$followed) {
-            $follower = new Folows();
-            $follower->user_id = auth()->id();
-            $follower->follower_id = $request->follower_id;
-            $follower->save();
-            return redirect('/user');
+            // $follower = new Folows();
+            // $follower->user_id = auth()->id();
+            // $follower->follower_id = $request->follower_id;
+            // $follower->save();
+            Folows::create([
+                'user_id' => $post->id_user,
+                'follower_id' => auth()->id(),
+            ]);
         }
+        return redirect()->route('home');
     }
     /**
      * Display the specified resource.
@@ -74,14 +78,15 @@ class FolowsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        Folows::where('user_id', auth()->id())
-            ->where('follower_id', $request->id)
-            ->delete();
+        $followerId = Auth::user()->id;
+        $follow = Folows::where('id', $id)->first();
 
+        if ($follow) {
+            $follow->delete();
+        }
 
-
-        return redirect('/user');
+        return redirect()->route('home');
     }
 }

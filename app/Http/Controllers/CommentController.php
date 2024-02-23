@@ -35,10 +35,14 @@ class CommentController extends Controller
             // $notification->user_id = $posts->id_user; // The user who created the post
             // $notification->message =  session('Fname').' '.'has commented your post !';
             // $notification->save();
-            Notification::create([
-                'user_id' => $posts->id_user,
-                'message' => $user_id->Fname . ' ' . 'has commented your post',
-            ]);
+            if($posts->id_user != $user_id) {
+                // Create a notification for the post owner
+                Notification::create([
+                    'user_id' => $posts->id_user,
+                    'message' => session('Fname') . ' ' . 'has commented your post',
+                ]);
+            }
+            
             return redirect()->route('home');
         }
 

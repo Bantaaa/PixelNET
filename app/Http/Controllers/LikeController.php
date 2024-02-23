@@ -53,14 +53,16 @@ class LikeController extends Controller
                     'id_user' => $user->id,
                     'id_post' => $id,
                 ]);
-
-                // Create a notification for the post owner
-                Notification::create([
-                    'user_id' => $post->id_user,
-                    'message' => $user->Fname . ' ' . 'has liked your post',
-                ]);
+                if($post->id_user != $user->id) {
+                    // Create a notification for the post owner
+                    Notification::create([
+                        'user_id' => $post->id_user,
+                        'message' => $user->Fname . ' ' . 'has liked your post',
+                    ]);
+                }
 
                 return redirect()->route('home')->with('success', 'Post liked successfully');
+
             } else {
                 // unlike
                 $existing_like->delete();

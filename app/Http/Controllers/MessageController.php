@@ -76,7 +76,8 @@ class MessageController extends Controller
             'receiver' => Session::get('receiver_id'),
             'content' => $request->content
         ]);
-        return redirect('/message/'.Session::get('receiver_id'));
+        // dd(Session::get('receiver_id'));
+        return redirect()->route('home');
     }
 
     /**

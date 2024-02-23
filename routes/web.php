@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Auth;
 //     return view('home');
 // });
 
-Route::get('/' , [PostController::class , 'index'])->name("home");
+Route::get('/' , [PostController::class , 'index'])->name('home');
 Route::get('/register', [AuthController::class, 'auth'])->name('login');
 // Route::post('/register', [AuthController::class, 'signup'])->name('bilal');
 
@@ -52,9 +52,9 @@ Route::get('/user', [MessageController::class, 'create']);
 
 Route::get('/pstman', [MessageController::class, 'pstman']);
 
-Route::post('/unfollow/{id}', [FolowsController::class, 'destroy'])->name('unfollow');
+Route::delete('folows/{id}/unfollow', [FolowsController::class, 'destroy'])->name('unfollow');
 
-Route::post('/follows', [FolowsController::class, 'store'])->name('follow');
+Route::post('/folows/{id}/follow', [FolowsController::class, 'store'])->name('follow');
 
 Route::get('/follow', [FolowsController::class, 'follow'])->name('foll');
 
