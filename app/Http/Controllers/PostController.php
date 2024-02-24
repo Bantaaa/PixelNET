@@ -11,7 +11,6 @@ use App\Models\Notification;
 use App\Models\Folows;
 use App\Models\Message;
 use Illuminate\Support\Facades\Session;
-use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
 

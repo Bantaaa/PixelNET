@@ -27,7 +27,7 @@ class MessageController extends Controller
     $messages = $sent_messages->merge($received_messages);
 
     $followers = Folows::where('follower_id', Auth::user()->id)->get();
-    $follower = Folows::where('follower_id', $id)->first();
+    $follower = Folows::where('user_id', $id)->first();
 
     return view('chat', compact('messages', 'received_messages', 'sent_messages', 'followers', 'follower'));
 }
