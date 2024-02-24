@@ -63,12 +63,7 @@
                         @csrf
                         <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Follow</button>
                     </form>
-                    @elseif($followed[$post->id])
-                    <form action="{{ route('unfollow', ['id' => $post->id]) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">UnFollow</button>
-                    </form>
+                    
                     @endif
                     @endif
 
@@ -178,6 +173,7 @@
 
     </section>
 
+    @if(session('Fname'))
     <!-- Sidebar Section -->
     <aside class="w-full md:w-1/3 flex flex-col items-center px-3">
 
@@ -188,6 +184,7 @@
         </div>
 
         <!-- List of Connections Section -->
+        
         <div class="w-full bg-white shadow flex flex-col items-center my-4 p-6">
             <p class="text-xl font-semibold pb-5">Connections</p>
             <ul class="space-y-4 w-96">
@@ -197,9 +194,11 @@
                     <h4 class="ml-3">{{ $follower->user->Fname }}</h4>
                     @if(session('Fname'))
                     <div class="ml-auto relative">
-                        <button class="bg-blue-800 text-white px-2 py-1 rounded hover:bg-blue-700" onclick="toggleConversation(1)">
+                        <form action="{{ route('chat', ['id' => $follower->user->id]) }}" method="GET" class="inline">
+                        <button class="bg-blue-800 text-white px-2 py-1 rounded hover:bg-blue-700">
                             Connect
                         </button>
+                        </form>
                         <form action="{{ route('unfollow', ['id' => $follower->id]) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
@@ -261,6 +260,7 @@
 
 
     </aside>
+    @endif
 
 
 

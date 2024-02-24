@@ -59,3 +59,7 @@ Route::post('/folows/{id}/follow', [FolowsController::class, 'store'])->name('fo
 Route::get('/follow', [FolowsController::class, 'follow'])->name('foll');
 
 Route::get('/supremerProfile' , [AuthController::class , 'supremerProfile']);
+
+
+// messages
+Route::get('chat/{id}', [MessageController::class, 'index'])->name('chat');

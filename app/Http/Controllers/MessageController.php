@@ -18,18 +18,19 @@ class MessageController extends Controller
      */
     public $sen ;
      
-    public function index(Request $request)
-    {
-        $sender_id = $request->id;
-        $receiver_id = Auth::id();
-        Session::put('receiver_id', $request->id);
-        $sent_messages = Message::where('sender', $sender_id)->where('receiver', $receiver_id)->get();
-        $received_messages = Message::where('sender', $receiver_id)->where('receiver', $sender_id)->get();
-    
-        $messages = $sent_messages->merge($received_messages);
+    public function index(Request $request, int $id)
+{
+    $user = Auth::user();
+    $sent_messages = Message::where('sender', Auth::user()->id)->where('receiver', $id)->get();
+    $received_messages = Message::where('sender', $id)->where('receiver', Auth::user()->id)->get();
 
-        return view('message', compact('messages'));
-    }
+    $messages = $sent_messages->merge($received_messages);
+
+    $followers = Folows::where('follower_id', Auth::user()->id)->get();
+    $follower = Folows::where('follower_id', $id)->first();
+
+    return view('chat', compact('messages', 'received_messages', 'sent_messages', 'followers', 'follower'));
+}
     
 
     /**

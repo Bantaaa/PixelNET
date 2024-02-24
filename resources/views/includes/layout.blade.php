@@ -179,7 +179,7 @@
             <!-- End Navbar -->
 
     <!-- Topic Nav -->
-    <nav class="w-full py-4 border-t border-b bg-gray-100" x-data="{ open: false }">
+    <!-- <nav class="w-full py-4 border-t border-b bg-gray-100" x-data="{ open: false }">
         <div class="block sm:hidden">
             <a
                 href="#"
@@ -199,7 +199,7 @@
                 <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">Sports</a>
             </div>
         </div>
-    </nav>
+    </nav> -->
 
     
     
