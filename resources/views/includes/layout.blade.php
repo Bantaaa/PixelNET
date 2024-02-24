@@ -13,6 +13,8 @@
 	
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,400&display=swap" rel="stylesheet">
 
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/autour-du-monde.png') }}">
+
     <style>
         .test{
             background-color: #f3f4f6;

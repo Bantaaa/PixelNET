@@ -90,7 +90,7 @@ class AuthController extends Controller
         $id = Auth::id();
         $likes = Likes::where('id_user', $id)->delete();
         $messages = Message::where('sender', $id)->delete();
-        $follows = Folows::where('user_id', $id)->delete();
+        $follows = Folows::where('user_id', $id)->OrWhere('follower_id', $id)->delete();
         $comments = Comment::where('id_user', $id)->delete();
         $posts = Post::where('id_user', $id)->delete();
         $user = User::where('id', $id)->delete();

@@ -191,7 +191,7 @@
             @foreach($followers as $follower)
             <li class="flex items-center">
                 <img src="{{ asset('images/2919906.png') }}" alt="Profile Picture 1" class="h-8 w-8 rounded-full">
-                <h4 class="ml-3">{{ $follower->user->Fname }}</h4>
+                <h4 class="ml-3">{{ $follower->user->Fname.' '.$follower->user->Lname }}</h4>
                 
                 <div class="ml-auto relative">
                     <form action="{{ route('chat', ['id' => $follower->user->id]) }}" method="GET" class="inline">
@@ -220,7 +220,7 @@
             @foreach($users as $user)
             <li class="flex items-center">
                 <img src="{{ asset('images/2919906.png') }}" alt="Profile Picture" class="h-8 w-8 rounded-full">
-                <h4 class="ml-3">{{ $user->Fname }}</h4>
+                <h4 class="ml-3">{{ $user->Fname .' '. $user->Lname }}</h4>
                 
                 <div class="ml-auto relative">
                     <form action="{{ route('user_follow', ['id' => $user->id]) }}" method="POST" class="inline">
