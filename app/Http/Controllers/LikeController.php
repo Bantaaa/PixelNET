@@ -54,7 +54,7 @@ class LikeController extends Controller
                     'id_post' => $id,
                 ]);
                 if($post->id_user != $user->id) {
-                    // Create a notification for the post owner
+                    // notification for the post owner
                     Notification::create([
                         'user_id' => $post->id_user,
                         'message' => $user->Fname . ' ' . 'has liked your post',

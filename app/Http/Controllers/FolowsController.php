@@ -32,7 +32,7 @@ class FolowsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, string $id)
+    public function store(Request $request, int $id)
     {
         $user = $request->user();
         $post = Post::findOrFail($id);
@@ -46,6 +46,25 @@ class FolowsController extends Controller
             // $follower->save();
             Folows::create([
                 'user_id' => $post->id_user,
+                'follower_id' => auth()->id(),
+            ]);
+        }
+      
+        return redirect()->route('home');
+    }
+    public function addUser(Request $request, int $id)
+    {
+        
+        $followed = Folows::where('user_id', $id)->where('follower_id', auth()->id())->first();
+
+
+        if (!$followed) {
+            // $follower = new Folows();
+            // $follower->user_id = auth()->id();
+            // $follower->follower_id = $request->follower_id;
+            // $follower->save();
+            Folows::create([
+                'user_id' => $id,
                 'follower_id' => auth()->id(),
             ]);
         }

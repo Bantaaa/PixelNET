@@ -55,6 +55,8 @@ Route::get('/pstman', [MessageController::class, 'pstman']);
 Route::delete('folows/{id}/unfollow', [FolowsController::class, 'destroy'])->name('unfollow');
 
 Route::post('/folows/{id}/follow', [FolowsController::class, 'store'])->name('follow');
+Route::post('/follows/{id}/follow', [FolowsController::class, 'addUser'])->name('user_follow');
+
 
 Route::get('/follow', [FolowsController::class, 'follow'])->name('foll');
 

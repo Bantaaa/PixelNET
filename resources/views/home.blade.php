@@ -177,88 +177,64 @@
     <!-- Sidebar Section -->
     <aside class="w-full md:w-1/3 flex flex-col items-center px-3">
 
-        <!-- Mini Profile Section -->
-        <div class="w-full bg-white shadow flex flex-col items-center my-4 p-8">
-            <img src="{{ asset('images/2919906.png') }}" alt="Profile Picture" class="h-20 w-20 rounded-full mb-4">
-            <h3 class="text-2xl font-semibold">{{ session('username')}}</h3>
-        </div>
+    <!-- Mini Profile Section -->
+    <div class="w-full bg-white shadow flex flex-col items-center my-4 p-8">
+        <img src="{{ asset('images/2919906.png') }}" alt="Profile Picture" class="h-20 w-20 rounded-full mb-4">
+        <h3 class="text-2xl font-semibold">{{ session('username')}}</h3>
+    </div>
 
-        <!-- List of Connections Section -->
-        @if(session('Fname'))
-        <div class="w-full bg-white shadow flex flex-col items-center my-4 p-6">
-            <p class="text-xl font-semibold pb-5">Connections</p>
-            <ul class="space-y-4 w-96">
-                @foreach($followers as $follower)
-                <li class="flex items-center">
-                    <img src="{{ asset('images/2919906.png') }}" alt="Profile Picture 1" class="h-8 w-8 rounded-full">
-                    <h4 class="ml-3">{{ $follower->user->Fname }}</h4>
-                    
-                    <div class="ml-auto relative">
-                        <form action="{{ route('chat', ['id' => $follower->user->id]) }}" method="GET" class="inline">
+    <!-- List of Connections Section -->
+    @if(session('Fname'))
+    <div class="w-full bg-white shadow flex flex-col items-center my-4 p-6">
+        <p class="text-xl font-semibold pb-5">Connections</p>
+        <ul class="space-y-4 w-96">
+            @foreach($followers as $follower)
+            <li class="flex items-center">
+                <img src="{{ asset('images/2919906.png') }}" alt="Profile Picture 1" class="h-8 w-8 rounded-full">
+                <h4 class="ml-3">{{ $follower->user->Fname }}</h4>
+                
+                <div class="ml-auto relative">
+                    <form action="{{ route('chat', ['id' => $follower->user->id]) }}" method="GET" class="inline">
                         <button class="bg-blue-800 text-white px-2 py-1 rounded hover:bg-blue-700">
                             Connect
                         </button>
-                        </form>
-                        <form action="{{ route('unfollow', ['id' => $follower->id]) }}" method="POST" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="bg-red-700 text-white px-2 py-1 rounded hover:bg-red-600">
-                                Unfollow
-                            </button>
-                        </form>
-                    </div>
-                </li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
-        @foreach($messages as $message)
-
-        <!-- Conversation Section -->
-        <aside id="conversationSection-{{ $message->id }}" class="w-full bg-white shadow flex flex-col items-center my-4 p-6 hidden">
-            <h3 class="text-2xl font-semibold mb-8">Messages</h3>
-            <!-- Conversation content goes here -->
-            <div class="w-full space-y-4">
-                <!-- Sender's messages -->
-                @foreach($received_messages as $item)
-                <div class="flex items-start">
-                    <img src="{{ asset('images/2919906.png') }}" alt="Profile Picture" class="h-8 w-8 rounded-full">
-                    <div class="flex flex-col">
-                        <p class="bg-blue-200 text-gray-700 px-4 py-2 rounded-lg ml-2">{{ $item->content }}</p>
-                        <span class="text-gray-500 text-sm ml-2">{{ $item->created_at->diffForHumans() }}</span>
-                    </div>
+                    </form>
+                    <form action="{{ route('unfollow', ['id' => $follower->id]) }}" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="bg-red-700 text-white px-2 py-1 rounded hover:bg-red-600">
+                            Unfollow
+                        </button>
+                    </form>
                 </div>
-                @endforeach
-            </div>
-
-            <!-- Sender's messages -->
-            @foreach($sent_messages as $item)
-            <div class="flex items-end">
-                <p class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg mr-2">{{ $item->content }}</p>
-                <img src="{{ asset('images/2919906.png') }}" alt="Profile Picture" class="h-8 w-8 rounded-full">
-            </div>
+            </li>
             @endforeach
+        </ul>
+    </div>
+    @endif
 
-            <!-- Input field for sending messages -->
-            <form action="{{ route('store') }}" method="POST" class="flex items-center mt-4">
-                @csrf
-                <input type="hidden" name="receiver_id" >
-                <div class="flex">
-                    <input name="content" id="content" class="w-full bg-gray-200 text-gray-700 px-4 py-2 rounded-lg mr-2" placeholder="Type your message..." required>
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">Send</button>
+    <!-- List of Users Section -->
+    <div class="w-full bg-white shadow flex flex-col items-center my-4 p-6">
+        <p class="text-xl font-semibold pb-5">Users</p>
+        <ul class="space-y-4 w-96">
+            @foreach($users as $user)
+            <li class="flex items-center">
+                <img src="{{ asset('images/2919906.png') }}" alt="Profile Picture" class="h-8 w-8 rounded-full">
+                <h4 class="ml-3">{{ $user->Fname }}</h4>
+                
+                <div class="ml-auto relative">
+                    <form action="{{ route('user_follow', ['id' => $user->id]) }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-400">
+                            Follow
+                        </button>
+                    </form>
                 </div>
-            </form>
-            <script>
-                function toggleConversation(connectionId) {
-                    var conversationSection = document.getElementById("conversationSection-" + connectionId);
-                    conversationSection.classList.toggle("hidden");
-                }
-            </script>
-        </aside>
-        @endforeach
-
-
-    </aside>
+            </li>
+            @endforeach
+        </ul>
+    </div>
+</aside>
     @endif
 
 
