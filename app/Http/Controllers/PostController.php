@@ -30,16 +30,24 @@ class PostController extends Controller
     $followed = [];
     $sent_messages = [];
     $received_messages = [];
-    $messages = Message::where('sender', $user->id)
+    if($user)
+    {
+        $messages = Message::where('sender', $user->id)
         ->orWhere('receiver', $user->id)
         ->get();
+    }
+    
 
     foreach ($posts as $post) {
         $likes_count[$post->id] = Likes::where('id_post', $post->id)->count();
-        $existing_like[$post->id] = Likes::where('id_post', $post->id)->first();
-        $followed[$post->id] = Folows::where('user_id', $post->id_user)
-            ->where('follower_id', $user->id)
-            ->first();
+        if($user)
+        {
+            $existing_like[$post->id] = Likes::where('id_post', $post->id)->where('id_user', $user->id)->first();
+            $followed[$post->id] = Folows::where('user_id', $post->id_user)
+                ->where('follower_id', $user->id)
+                ->first();
+        }
+        
         $post->comments = Comment::where('id_post', $post->id)
             ->with('user')
             ->get();
@@ -67,6 +75,7 @@ class PostController extends Controller
 
         return view('home', compact(
             'posts',
+            
             'likes_count',
             'existing_like',
             'notifications',

@@ -119,7 +119,7 @@
                 <div class="mt-4">
                     <h2 class="text-lg font-bold mb-2">Comments</h2>
 
-                    @if ($post->comments->count() > 0)
+                    @if($post->comments->count() > 0)
                     @foreach ($post->comments as $comment)
                     <h2 class="text-lg font-bold mb-2"></h2>
 
@@ -184,7 +184,7 @@
         </div>
 
         <!-- List of Connections Section -->
-        
+        @if(session('Fname'))
         <div class="w-full bg-white shadow flex flex-col items-center my-4 p-6">
             <p class="text-xl font-semibold pb-5">Connections</p>
             <ul class="space-y-4 w-96">
@@ -192,7 +192,7 @@
                 <li class="flex items-center">
                     <img src="{{ asset('images/2919906.png') }}" alt="Profile Picture 1" class="h-8 w-8 rounded-full">
                     <h4 class="ml-3">{{ $follower->user->Fname }}</h4>
-                    @if(session('Fname'))
+                    
                     <div class="ml-auto relative">
                         <form action="{{ route('chat', ['id' => $follower->user->id]) }}" method="GET" class="inline">
                         <button class="bg-blue-800 text-white px-2 py-1 rounded hover:bg-blue-700">
@@ -207,12 +207,11 @@
                             </button>
                         </form>
                     </div>
-                    @endif
                 </li>
                 @endforeach
             </ul>
         </div>
-
+        @endif
         @foreach($messages as $message)
 
         <!-- Conversation Section -->
