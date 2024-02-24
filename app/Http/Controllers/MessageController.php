@@ -21,15 +21,16 @@ class MessageController extends Controller
     public function index(Request $request, int $id)
 {
     $user = Auth::user();
+    Session::put('receiver_id', $id);
     $sent_messages = Message::where('sender', Auth::user()->id)->where('receiver', $id)->get();
     $received_messages = Message::where('sender', $id)->where('receiver', Auth::user()->id)->get();
 
-    $messages = $sent_messages->merge($received_messages);
+    $allMessages = $sent_messages->merge($received_messages);
 
     $followers = Folows::where('follower_id', Auth::user()->id)->get();
     $follower = Folows::where('user_id', $id)->first();
 
-    return view('chat', compact('messages', 'received_messages', 'sent_messages', 'followers', 'follower'));
+    return view('chat', compact('allMessages', 'received_messages', 'sent_messages', 'followers', 'follower'));
 }
     
 
@@ -72,13 +73,14 @@ class MessageController extends Controller
     {
         $user = Auth::user();
         $sender = $user->id;
+        // dd($request->user->id);
         Message::create([
             'sender' => $sender,
             'receiver' => Session::get('receiver_id'),
             'content' => $request->content
         ]);
         // dd(Session::get('receiver_id'));
-        return redirect()->route('home');
+        return redirect()->back();
     }
 
     /**

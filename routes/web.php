@@ -63,3 +63,5 @@ Route::get('/supremerProfile' , [AuthController::class , 'supremerProfile']);
 
 // messages
 Route::get('chat/{id}', [MessageController::class, 'index'])->name('chat');
+Route::post('/msg', [MessageController::class, 'store'])->name('msg');
+
