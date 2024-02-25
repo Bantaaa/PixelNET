@@ -7,6 +7,8 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SearchController;
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -67,3 +69,6 @@ Route::get('/supremerProfile' , [AuthController::class , 'supremerProfile']);
 Route::get('chat/{id}', [MessageController::class, 'index'])->name('chat');
 Route::post('/msg', [MessageController::class, 'store'])->name('msg');
 
+
+//search
+Route::get('/search', [SearchController::class], 'search')->name('search');
