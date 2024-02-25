@@ -72,3 +72,5 @@ Route::post('/msg', [MessageController::class, 'store'])->name('msg');
 
 //search
 Route::get('/search', [SearchController::class], 'search')->name('search');
+// Route::get('/search', [AuthController::class, 'showSearch'])->name('search');
+Route::get('/search/users', [AuthController:: class, 'searchUsers'])->name('search.users');

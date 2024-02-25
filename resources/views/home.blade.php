@@ -63,7 +63,7 @@
                         @csrf
                         <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Follow</button>
                     </form>
-                    
+
                     @endif
                     @endif
 
@@ -155,7 +155,7 @@
                     </div>
                     @endif
                 </div>
-                
+
             </div>
         </article>
         @endforeach
@@ -178,44 +178,43 @@
     <!-- Sidebar Section -->
     <aside class="w-full md:w-1/3 flex flex-col items-center px-3">
 
-    <!-- Mini Profile Section -->
-    <div class="w-full bg-white shadow flex flex-col items-center my-4 p-8">
-        <img src="{{ asset('images/2919906.png') }}" alt="Profile Picture" class="h-20 w-20 rounded-full mb-4">
-        <h3 class="text-2xl font-semibold">{{ session('username')}}</h3>
-    </div>
+        <!-- Mini Profile Section -->
+        <div class="w-full bg-white shadow flex flex-col items-center my-4 p-8">
+            <img src="{{ asset('images/2919906.png') }}" alt="Profile Picture" class="h-20 w-20 rounded-full mb-4">
+            <h3 class="text-2xl font-semibold">{{ session('username')}}</h3>
+        </div>
 
-    <!-- List of Connections Section -->
-    @if(session('Fname'))
-    <div class="w-full bg-white shadow flex flex-col items-center my-4 p-6">
-        <p class="text-xl font-semibold pb-5">Connections</p>
-        <ul class="space-y-4 w-96">
-            @foreach($followers as $follower)
-            <li class="flex items-center">
-                <img src="{{ asset('images/2919906.png') }}" alt="Profile Picture 1" class="h-8 w-8 rounded-full">
-                <h4 class="ml-3">{{ $follower->user->Fname.' '.$follower->user->Lname }}</h4>
-                
-                <div class="ml-auto relative">
-                    <form action="{{ route('chat', ['id' => $follower->user->id]) }}" method="GET" class="inline">
-                        <button class="bg-blue-800 text-white px-2 py-1 rounded hover:bg-blue-700">
-                            Connect
-                        </button>
-                    </form>
-                    <form action="{{ route('unfollow', ['id' => $follower->id]) }}" method="POST" class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="bg-red-700 text-white px-2 py-1 rounded hover:bg-red-600">
-                            Unfollow
-                        </button>
-                    </form>
-                </div>
-            </li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+        <!-- List of Connections Section -->
+        @if(session('Fname'))
+        <div class="w-full bg-white shadow flex flex-col items-center my-4 p-6">
+            <p class="text-xl font-semibold pb-5">Connections</p>
+            <ul class="space-y-4 w-96">
+                @foreach($followers as $follower)
+                <li class="flex items-center">
+                    <img src="{{ asset('images/2919906.png') }}" alt="Profile Picture 1" class="h-8 w-8 rounded-full">
+                    <h4 class="ml-3">{{ $follower->user->Fname.' '.$follower->user->Lname }}</h4>
 
-    <!-- List of Users Section -->
-    <!-- List of Users Section -->
+                    <div class="ml-auto relative">
+                        <form action="{{ route('chat', ['id' => $follower->user->id]) }}" method="GET" class="inline">
+                            <button class="bg-blue-800 text-white px-2 py-1 rounded hover:bg-blue-700">
+                                Connect
+                            </button>
+                        </form>
+                        <form action="{{ route('unfollow', ['id' => $follower->id]) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-700 text-white px-2 py-1 rounded hover:bg-red-600">
+                                Unfollow
+                            </button>
+                        </form>
+                    </div>
+                </li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
+        <!-- List of Users Section -->
 <div class="w-full bg-white shadow flex flex-col items-center my-4 p-6">
     <p class="text-xl font-semibold pb-5">Users</p>
     <form id="searchForm" class="mb-5">
@@ -240,46 +239,47 @@
     </ul>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $('#searchForm').on('submit', function (e) {
+    $(document).ready(function() {
+        $('#searchForm').submit(function(e) {
             e.preventDefault();
-            var query = $('#searchInput').val();
+            var keyword = $('#searchInput').val();
 
             $.ajax({
-                url: '{{ route('search') }}',
                 type: 'GET',
-                data: { query: query },
-                success: function (response) {
-                    $('#userList').empty();
-
-                    for (var i = 0; i < response.length; i++) {
-                        var user = response[i];
-                        var html = '<li class="flex items-center">' +
-                            '<img src="{{ asset('images/2919906.png') }}" alt="Profile Picture" class="h-8 w-8 rounded-full">' +
-                            '<h4 class="ml-3">' + user.name + '</h4>' +
-                            '<div class="ml-auto relative">' +
-                            '<form action="{{ route('user_follow', ['id' => '+user.id+']) }}" method="POST" class="inline">' +
-                            '@csrf' +
-                            '<button type="submit" class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-400">' +
-                            'Follow' +
-                            '</button>' +
-                            '</form>' +
-                            '</div>' +
-                            '</li>';
-
-                        $('#userList').append(html);
-                    }
+                url: '/search/users',
+                data: {
+                    title_s: keyword
                 },
-                error: function (xhr) {
-                    console.log(xhr.responseText);
+                success: function(data) {
+                    $('#userList').empty();
+                    console.log(data);
+                    data.forEach(function(user) {
+                        var listItem = $('<li>').addClass('flex items-center')
+                            .append($('<img>').attr('src', '{{ asset('images/2919906.png') }}')
+                                .attr('alt', 'Profile Picture')
+                                .addClass('h-8 w-8 rounded-full'))
+                            .append($('<h4>').addClass('ml-3').text(user.Fname + ' ' + user.Lname))
+                            .append($('<div>').addClass('ml-auto relative')
+                                .append($('<form>').attr('action', '{{ route('user_follow', ['id' => $user->id]) }}')
+                                    .attr('method', 'POST').addClass('inline')
+                                    .append('@csrf')
+                                    .append($('<button>').attr('type', 'submit')
+                                        .addClass('bg-green-500 text-white px-2 py-1 rounded hover:bg-green-400')
+                                        .text('Follow'))));
+                        $('#userList').append(listItem);
+                    });
+                },
+                error: function(error) {
+                    console.error("Error during search:", error);
                 }
+                
             });
         });
     });
 </script>
-    @endif
+        @endif
 
 
 

@@ -75,7 +75,7 @@ class AuthController extends Controller
                 // 'role' => $user->role,
                 'Fname' => $user->Fname,
                 'user_id' => $user->id,
-                'username' => $user->Fname.' '.$user->Lname,
+                'username' => $user->Fname . ' ' . $user->Lname,
             ]);
             // dd(session('role'));
             return redirect()->route('home'); // Redirect to the intended page or your dashboard
@@ -85,8 +85,30 @@ class AuthController extends Controller
         }
     }
 
+    // public function showSearch() {
+    //     return view('posts.search');
+    // }
 
-    public function supremerProfile(Request $request){
+    public function searchUsers(Request $request)
+    {
+        $keyword = $request->input('title_s');
+
+        if ($keyword === '') {
+            // If the search keyword is empty, return all users or handle as needed
+            $users = User::all();
+        } else {
+            // Search for users with names containing the keyword
+            $users = User::where('Fname', 'like', '%' . $keyword . '%')->get();
+        }
+
+        // dd($users);
+        
+        // Pass the users data to the view
+        return response()->json($users);
+    }
+
+    public function supremerProfile(Request $request)
+    {
         $id = Auth::id();
         $likes = Likes::where('id_user', $id)->delete();
         $messages = Message::where('sender', $id)->delete();
@@ -96,9 +118,6 @@ class AuthController extends Controller
         $user = User::where('id', $id)->delete();
         session()->flush();
         return redirect()->route('login');
-      
-       
-
     }
 
     public function logout()
