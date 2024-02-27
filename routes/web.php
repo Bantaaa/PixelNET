@@ -74,3 +74,9 @@ Route::post('/msg', [MessageController::class, 'store'])->name('msg');
 Route::get('/search', [SearchController::class], 'search')->name('search');
 // Route::get('/search', [AuthController::class, 'showSearch'])->name('search');
 Route::get('/search/users', [AuthController:: class, 'searchUsers'])->name('search.users');
+
+
+/// serves 
+
+
+Route::get('/cacler/{id}/{id}')
