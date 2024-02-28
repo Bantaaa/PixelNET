@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 class MessageController extends Controller
 {
@@ -74,11 +75,18 @@ class MessageController extends Controller
         $user = Auth::user();
         $sender = $user->id;
         // dd($request->user->id);
-        Message::create([
+        $check = Message::create([
             'sender' => $sender,
             'receiver' => Session::get('receiver_id'),
             'content' => $request->content
         ]);
+        if($check)
+        {
+            Notification::create([
+                'user_id' => Session::get('receiver_id'),
+                'message' => $user->Fname . ' ' . 'has sent you a message!',
+            ]);
+        }
         // dd(Session::get('receiver_id'));
         return redirect()->back();
     }

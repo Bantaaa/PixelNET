@@ -60,6 +60,11 @@ class PostController extends Controller
             $request->session()->put('receiver_id', $receiver_id);
 
             $notifications = Notification::where('user_id', $user->id)->get();
+            $likesNotifications = Notification::where('user_id', $user->id)->where('message', 'LIKE', '%liked%')->get();
+            $commentsNotifications = Notification::where('user_id', $user->id)->where('message', 'LIKE', '%commented%')->get();
+            $messagesNotifications = Notification::where('user_id', $user->id)->where('message', 'LIKE', '%message%')->get();
+
+
             $followers = Folows::where('follower_id', $user->id)->get();
 
             foreach ($messages as $message) {
@@ -81,6 +86,9 @@ class PostController extends Controller
                 'followers',
                 'followed',
                 'users',
+                'likesNotifications',
+                'commentsNotifications',
+              'messagesNotifications',
             ));
         } else {
             return view('home', compact('posts', 'likes_count'));

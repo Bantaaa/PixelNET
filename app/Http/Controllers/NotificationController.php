@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Notification;
+use App\Services\NotificationService;
 
 class NotificationController extends Controller
 {
+    private $notification;
+
+    public function __construct(NotificationService $notificationService) {
+        $this->notification = $notificationService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -27,32 +33,22 @@ class NotificationController extends Controller
      * Store a newly created resource in storage.
      */
 
-     public function addNotification(Request $request)
-{
-    $user_id = $request->user()->id;
-
-    Notification::create([
-        'user_id' => $user_id,
-        'is_read' => null,
-        'message' => $request->message,
-    ]);
-
-            return redirect()->route('home');        
-    
-}
-
-public function deleteNotification(Request $request)
-{
-    $notificationId = $request->id;
-    $notification = Notification::find($notificationId);
-
-    if ($notification) {
-        $notification->delete();
+    public function addNotification(Request $request)
+    {
+        $this->notification->addNotification($request);
     }
 
-    return redirect()->route('home');
+    public function deleteNotification(Request $request)
+    {
+        $notificationId = $request->id;
+        $notification = Notification::find($notificationId);
 
-}
+        if ($notification) {
+            $notification->delete();
+        }
+
+        return redirect()->route('home');
+    }
 
 
     public function store(Request $request)
