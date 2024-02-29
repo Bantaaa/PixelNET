@@ -128,7 +128,7 @@
                         <div class="flex items-start space-x-4"> <!-- Add mb-2 class for margin-bottom -->
                             <img src="{{ asset('images/2919906.png') }}" alt="User Avatar" class="w-8 h-8 rounded-full">
                             <div>
-                                <p class="font-semibold">{{ $comment->user->Fname }}</p>
+                                <p class="font-semibold">{{ $comment->user->Fname .' '. $comment->user->Lname }}</p>
                                 <p class="text-sm">{{ $comment->content }}</p>
                             </div>
                         </div>

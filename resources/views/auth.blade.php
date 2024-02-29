@@ -7,26 +7,39 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- <link rel="stylesheet" href="./styleAuth.css"> -->
     <link rel="stylesheet" href="{{ asset('assets/css/styleAuth.css') }}">
+    
     <link rel="icon" type="image/x-icon" href="{{ asset('images/autour-du-monde.png') }}">
-
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
     <title>Authentication</title>
 </head>
 
 <body>
+    @if ($errors->any())
+    <div style="background-color: #FED7D7; border: 1px solid #EF4444; color: #EF4444; padding: 1rem; border-radius: 0.375rem; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" role="alert">
+        <ul style="list-style-type: disc; padding-left: 1rem;">
+            @foreach ($errors->all() as $error)
+            <li style="font-size: 0.875rem;">{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <div class="container" id="container">
         <div class="form-container sign-up">
             <form action="{{ route('register') }}" method="POST">
-            @csrf
+                @csrf
                 <h1>Create Account</h1>
-                
+
                 <span>or use your email for registeration</span>
                 <input type="text" name="Fname" placeholder="First name">
                 <input type="text" name="Lname" placeholder="Last name">
                 <input type="tel" name="phone" placeholder="Phone number">
                 <input type="email" name="email" placeholder="Email">
-                <input type="hidden" name="bio" >
-                <input type="hidden" name="github" >
-                <input type="hidden" name="linkedin" >
+                <input type="hidden" name="bio">
+                <input type="hidden" name="github">
+                <input type="hidden" name="linkedin">
 
                 <input type="password" name="password" placeholder="Password">
                 <input type="password" name="password_confirmation" placeholder="Confirm Password">

@@ -5,15 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>YouConnect</title>
+    <title>PixelNet</title>
     <meta name="description" content="Platform that connects users">
     <meta name="keywords" content="tailwind,tailwindcss,tailwind css,css,starter template,free template,store template, shop layout, minimal, monochrome, minimalistic, theme, nordic">
 
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
 
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,400&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="{{ asset('images/autour-du-monde.png') }}">
 
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/autour-du-monde.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
 
 </head>
 
@@ -27,14 +31,15 @@
                 <!-- User details -->
                 <div class="flex flex-row items-center justify-center h-12 w-full">
                     <!-- User avatar -->
-                    <a href="{{ route('home') }}" class="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10">
-                        <!-- Avatar icon -->
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-                        </svg>
-                    </a>
+                    
                     <!-- User name -->
-                    <a href="{{ route('home') }}" class="ml-2 font-bold text-2xl">YouConnect</a>
+                    <!-- <a href="{{ route('home') }}" class="ml-2 font-bold text-2xl"> -->
+                        <div class="order-1 md:order-2">
+                            <a class="flex items-center tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl" href="{{ route('home') }}">
+                                <img src="{{ asset('images/PixelNet.png') }}" alt="pixel net logo" style="max-width: 200px;">
+                            </a>
+                        </div>
+                    <!-- </a> -->
                 </div>
                 <!-- User profile -->
                 <div class="flex flex-col items-center bg-indigo-100 border border-gray-200 mt-4 w-full py-6 px-4 rounded-lg">
@@ -119,24 +124,24 @@
                     <!-- Message input area -->
                     <form action="{{ route('msg') }}" method="POST">
                         @csrf
-                    <div class="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
-                        <!-- Attachment button -->
-                        <button class="flex items-center justify-center h-10 w-10 rounded-full bg-gray-200 hover:bg-gray-300">
-                            <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                            </svg>
-                        </button>
-                        <!-- Input field -->
-                        <input type="hidden" name="receiver_id" class="flex-grow h-full px-4 ml-4 border rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Type your message..." />
+                        <div class="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
+                            <!-- Attachment button -->
+                            <button class="flex items-center justify-center h-10 w-10 rounded-full bg-gray-200 hover:bg-gray-300">
+                                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                </svg>
+                            </button>
+                            <!-- Input field -->
+                            <input type="hidden" name="receiver_id" class="flex-grow h-full px-4 ml-4 border rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Type your message..." />
 
-                        <input type="text" name="content" class="flex-grow h-full px-4 ml-4 border rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Type your message..." />
-                        <!-- Send button -->
-                        <button type="submit" class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 hover:bg-indigo-600 text-white">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </button>
-                    </div>
+                            <input type="text" name="content" class="flex-grow h-full px-4 ml-4 border rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Type your message..." />
+                            <!-- Send button -->
+                            <button type="submit" class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 hover:bg-indigo-600 text-white">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>

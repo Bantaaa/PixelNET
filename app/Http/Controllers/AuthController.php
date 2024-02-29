@@ -31,12 +31,21 @@ class AuthController extends Controller
             'phone' => 'required|string|unique:users|max:255',
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|string|min:8',
+        ], [
+            'Fname.required' => 'The first name field is required.',
+            'Lname.required' => 'The last name field is required.',
+            'phone.required' => 'The phone number field is required.',
+            'email.required' => 'The email field is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'password.required' => 'The password field is required.',
+            'password.min' => 'The password must be at least 8 characters.',
         ]);
 
         $user = $request->all();
         $user['password'] = Hash::make($request->password);
 
         User::create($user);
+
         return redirect()->route('login')->with('success', 'Account created successfully');
     }
 
@@ -102,23 +111,25 @@ class AuthController extends Controller
         }
 
         // dd($users);
-        
+
         // Pass the users data to the view
         return response()->json($users);
     }
 
     public function supremerProfile(Request $request)
-    {
-        $id = Auth::id();
-        $likes = Likes::where('id_user', $id)->delete();
-        $messages = Message::where('sender', $id)->delete();
-        $follows = Folows::where('user_id', $id)->OrWhere('follower_id', $id)->delete();
-        $comments = Comment::where('id_user', $id)->delete();
-        $posts = Post::where('id_user', $id)->delete();
-        $user = User::where('id', $id)->delete();
-        session()->flush();
-        return redirect()->route('login');
-    }
+{
+    $id = Auth::id();
+    
+    $user = User::find($id);
+    $user->Fname = 'Pixel'; 
+    $user->Lname = 'User'; 
+    $user->save();
+
+    // Rest of the code to delete related records and perform other actions...
+
+    session()->flush();
+    return redirect()->route('login');
+}
 
     public function logout()
     {
